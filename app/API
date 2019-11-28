@@ -1,0 +1,9 @@
+HTTP : https://us-central1-razbuc-6425f.cloudfunctions.net
+
+Pour enregistrer USER :
+
+# Endpoint
+    /users
+param : id => numéro d'ID après la première connexion
+
+Si première connexion ne pas mettre de paramètre ou mettre de paramètre.
