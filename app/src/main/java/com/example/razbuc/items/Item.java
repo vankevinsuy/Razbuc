@@ -6,15 +6,15 @@ public abstract class Item extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    private int value;
-    private String type;        // Possible types : Consumable, Misc, Vehicle, Weapon
+    private int[] value;
+    private String type;        // Possible types : Consumable, Misc, Paper map, Toolbox, Vehicle, Weapon
     private int durability;
     private int price;          // By default, this.price = this.value for every item
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     public Item(String name,
-                int value,
+                int[] value,
                 String type,
                 int durability,
                 int[] position) {
@@ -24,16 +24,16 @@ public abstract class Item extends GameEntity {
         this.type = type;
         this.durability = durability;
         this.setPosition(position);
-        setPrice(value);
+        setPrice(value[0]);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
 
-    public int getValue() {
+    public int[] getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(int[] value) {
         this.value = value;
     }
 

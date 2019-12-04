@@ -6,7 +6,7 @@ public class Misc extends Item {
 
     final static String ITEM_TYPE = "Misc";
     final static int MISC_DURABILITY = 10;        // If durability not set, this.durability = 10
-    final static int MISC_VALUE = 10;       // Default value for misc is 10
+    final static int[] MISC_VALUE = {10};       // Default value for misc is 10
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 

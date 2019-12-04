@@ -11,20 +11,20 @@ public class Weapon extends Item {
 
     // Weapon creation with custom durability
     public Weapon(String name,
-                  int value,        // Weapon damage
+                  int[] value,        // Weapon damage
                   int durability,
                   int[] position) {
         super(name, value, ITEM_TYPE, durability, position);
         System.out.println("Constructing a weapon ...");
-        setPrice(this.getValue() * 2);         // By default, this.price = this.value*2 for every weapon
+        setPrice(this.getValue()[0] * 2);         // By default, this.price = this.value*2 for every weapon
     }
 
     // Weapon creation with default durability
     public Weapon(String name,
-                  int value,
+                  int[] value,
                   int[] position) {
         super(name, value, ITEM_TYPE, WEAPON_DURABILITY, position);
         System.out.println("Constructing a weapon ...");
-        setPrice(this.getValue() * 2);         // By default, this.price = this.value*2 for every weapon
+        setPrice(this.getValue()[0] * 2);         // By default, this.price = this.value*2 for every weapon
     }
 }

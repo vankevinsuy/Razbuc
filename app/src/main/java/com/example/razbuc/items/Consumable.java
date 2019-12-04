@@ -11,16 +11,16 @@ public class Consumable extends Item {
 
     // Consumable creation with custom durability
     public Consumable(String name,
-                      int value,
-                      int durability,
-                      int[] position) {      // Healing amount
+                      int[] value,
+                      int durability,        // Healing amount
+                      int[] position) {
         super(name, value, ITEM_TYPE, durability, position);
         System.out.println("Constructing a consumable ...");
     }
 
     // Consumable creation with default durability
     public Consumable(String name,
-                      int value,
+                      int[] value,
                       int[] position) {      // Healing amount
         super(name, value, ITEM_TYPE, CONSUMABLE_DURABILITY, position);
         System.out.println("Constructing a consumable ...");
