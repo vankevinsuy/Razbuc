@@ -1,11 +1,11 @@
 package com.example.razbuc.characters;
 
-import com.example.razbuc.Entity;
+import com.example.razbuc.GameEntity;
 import com.example.razbuc.items.Item;
 
 import java.util.ArrayList;
 
-public abstract class Character extends Entity {
+public abstract class Character extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 

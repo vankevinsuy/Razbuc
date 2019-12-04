@@ -1,6 +1,6 @@
 package com.example.razbuc;
 
-public abstract class Entity {
+public abstract class GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 

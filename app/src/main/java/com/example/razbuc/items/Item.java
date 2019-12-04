@@ -1,8 +1,8 @@
 package com.example.razbuc.items;
 
-import com.example.razbuc.Entity;
+import com.example.razbuc.GameEntity;
 
-public abstract class Item extends Entity {
+public abstract class Item extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
