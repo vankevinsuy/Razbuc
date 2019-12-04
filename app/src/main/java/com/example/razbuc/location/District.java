@@ -6,9 +6,8 @@ import java.util.ArrayList;
 
 public class District extends GameEntity {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
-    private String description;
     private ArrayList<String> possibleDirection;
-    private Object elements;
+    private ArrayList<GameEntity> elements;
     private int id;
     private boolean visited;
 
@@ -19,16 +18,8 @@ public class District extends GameEntity {
         System.out.println("Constructing a district ...");
         this.setName(name);
         this.setPosition(position);
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void setDescription(String description) {
-        this.description = description;
+        this.possibleDirection = new ArrayList<>();
+        this.elements = new ArrayList<>();
     }
 
     public ArrayList<String> getPossibleDirection() {
@@ -37,6 +28,10 @@ public class District extends GameEntity {
 
     public void setPossibleDirection(ArrayList<String> possibleDirection) {
         this.possibleDirection = possibleDirection;
+    }
+
+    public void addPossibleDirection(String possibleDirection) {
+        this.possibleDirection.add(possibleDirection);
     }
 
     public int getId() {
@@ -55,4 +50,15 @@ public class District extends GameEntity {
         this.visited = visited;
     }
 
+    public ArrayList<GameEntity> getElements() {
+        return elements;
+    }
+
+    public void setElements(ArrayList<GameEntity> elements) {
+        this.elements = elements;
+    }
+
+    public void addElements(GameEntity elements) {
+        this.elements.add(elements);
+    }
 }

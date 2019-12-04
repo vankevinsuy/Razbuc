@@ -2,7 +2,9 @@ package com.example.razbuc;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
+import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,7 +15,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         GameMap gameMap = new GameMap();
-    }
 
-    //boo
+        for(District district : gameMap.getListDistrict()){
+            Log.d("Position X du district", Integer.toString(district.getPosition()[0]));
+        }
+    }
 }

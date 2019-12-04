@@ -14,8 +14,7 @@ public class Ennemy extends FightingChar {
                   ArrayList<Item> inventory,
                   int[] position,
                   int health_points,
-                  int basic_damages,
-                  Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages, weapon);
+                  int basic_damages) {
+        super(name, inventory, position, health_points, basic_damages);
     }
 }

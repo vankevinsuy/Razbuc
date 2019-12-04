@@ -28,7 +28,7 @@ public class Hero extends FightingChar {
                 int health_points,
                 int basic_damages,
                 Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages, weapon);
+        super(name, inventory, position, health_points, basic_damages);
         System.out.println("Constructing the hero ...");
         this.basic_movement = BASIC_MOVEMENT;
         this.computeReal_movement();

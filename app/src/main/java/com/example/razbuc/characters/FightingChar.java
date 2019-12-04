@@ -12,7 +12,7 @@ public abstract class FightingChar extends Character {
     private int health_points;
     private int basic_damages;
     private int real_damages;       // Basic_damages + Weapon damage
-    private Weapon weapon;
+
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
@@ -20,14 +20,12 @@ public abstract class FightingChar extends Character {
                         ArrayList<Item> inventory,
                         int[] position,
                         int health_points,
-                        int basic_damages,
-                        Weapon weapon) {
+                        int basic_damages) {
         super(name, inventory, position);
         System.out.println("Constructing a fighting character ...");
         this.health_points = health_points;
         this.basic_damages = basic_damages;
-        this.weapon = weapon;
-        this.computeReal_damages();
+//        this.computeReal_damages();
     }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
@@ -56,14 +54,6 @@ public abstract class FightingChar extends Character {
         this.real_damages = real_damages;
     }
 
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
 
     public void gainHealth_points(int value) {
@@ -78,13 +68,13 @@ public abstract class FightingChar extends Character {
             setHealth_points(result);
         }
     }
-
-    public void computeReal_damages() {
-        if (this.weapon == null) {
-            setReal_damages(this.basic_damages);
-        } else {
-            setReal_damages(this.basic_damages + this.weapon.getValue());
-        }
-    }
+//
+//    public void computeReal_damages() {
+//        if (this.weapon == null) {
+//            setReal_damages(this.basic_damages);
+//        } else {
+//            setReal_damages(this.basic_damages + this.weapon.getValue());
+//        }
+//    }
 
 }
