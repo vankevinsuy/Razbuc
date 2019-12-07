@@ -1,45 +1,64 @@
 package com.example.razbuc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.razbuc.LocalDatabase.RazbucLocalDb;
 import com.squareup.picasso.Picasso;
 
 public class SplashScreen extends AppCompatActivity {
 
     private ImageView splashScreenImgView;
+    private RazbucLocalDb razbucLocalDb;
+
 
     @Override
         protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash_screen);
+
+        razbucLocalDb = new RazbucLocalDb(getApplicationContext());
+        this.splashScreenImgView = findViewById(R.id.splashScreenImageView);
 
         hideSystemUI();
 
-        setContentView(R.layout.activity_splash_screen);
-
-        this.splashScreenImgView = findViewById(R.id.splashScreenImageView);
-
         Picasso.get().load(R.drawable.splash).fit().into(this.splashScreenImgView);
-
 
         // after 2 seconds, destroy SplashScreen Activity and launch MainActivity
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(mainActivity);
-                finish();
+
+                // verify if we have to create a new game
+                if(razbucLocalDb.isFirstUse()){
+                    //add new user in firestore and local database
+                    createNewUser();
+                    Intent NewGameActivity = new Intent(getApplicationContext(), NewGameActivity.class);
+                    startActivity(NewGameActivity);
+                    finish();
+                }
+                else {
+                    Intent ResumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
+                    startActivity(ResumeGameActivity);
+                    finish();
+                }
             }
         }, 2000);
+
     }
 
-
+    // remove the top bar
     private void hideSystemUI() {
         // Enables regular immersive mode.
         // For "lean back" mode, remove SYSTEM_UI_FLAG_IMMERSIVE.
@@ -57,4 +76,30 @@ public class SplashScreen extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    // add new user in firestore and save the generated user id in our local database
+    private void createNewUser(){
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = getResources().getString(R.string.Firestore_add_new_user);
+
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                        String res = response.substring(2,100).split(",")[0];
+                        String idNewUser = res.replaceAll("\"", "");
+                        razbucLocalDb.saveUserId(idNewUser);
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
 }

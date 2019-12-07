@@ -15,6 +15,6 @@ public class Ennemy extends FightingChar {
                   int[] position,
                   int health_points,
                   int basic_damages) {
-        super(name, inventory, position, health_points, basic_damages);
+        super(name, inventory, position, health_points, basic_damages, null);
     }
 }

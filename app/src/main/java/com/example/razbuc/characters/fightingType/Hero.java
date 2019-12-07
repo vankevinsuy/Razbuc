@@ -28,10 +28,10 @@ public class Hero extends FightingChar {
                 int health_points,
                 int basic_damages,
                 Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages);
+        super(name, inventory, position, health_points, basic_damages, null);
         System.out.println("Constructing the hero ...");
         this.basic_movement = BASIC_MOVEMENT;
-        this.computeReal_movement();
+//        this.computeReal_movement();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
@@ -86,11 +86,11 @@ public class Hero extends FightingChar {
         this.allies.remove(ally);
     }
 
-    public void computeReal_movement() {
-        if (this.vehicle == null) {
-            setReal_movement(this.basic_movement);
-        } else {
-            setReal_movement(this.basic_movement + this.vehicle.getValue());
-        }
-    }
+//    public void computeReal_movement() {
+//        if (this.vehicle == null) {
+//            setReal_movement(this.basic_movement);
+//        } else {
+//            setReal_movement(this.basic_movement + this.vehicle.getValue());
+//        }
+//    }
 }

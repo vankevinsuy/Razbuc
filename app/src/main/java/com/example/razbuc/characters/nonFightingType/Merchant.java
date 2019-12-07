@@ -15,7 +15,10 @@ public class Merchant extends NonFightingChar {
                     int[] position) {
         super(name, inventory, position);
         System.out.println("Constructing a merchant ...");
-        this.addToInventory(new Weapon("Kitchen knife", 1, 10, this.getPosition()));        // By default, every merchant sells a basic weapon
+
+        int[] fakeValue = new int[1];
+        fakeValue[0] = 1;
+        this.addToInventory(new Weapon("Kitchen knife", fakeValue, 10, this.getPosition()));        // By default, every merchant sells a basic weapon
     }
 
 
