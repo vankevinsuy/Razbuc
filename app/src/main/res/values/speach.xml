@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="list_step_new_game">
+        <item>welcome</item>
+        <item>start_new_game</item>
+        <item>choose_hero</item>
+        <item>describe_characters</item>
+    </string-array>
+
+    <string name="welcome">Bienvenue dans le jeu Razbuc.</string>
+    <string name="start_new_game">Veuillez double cliquer pour commencer une partie.</string>
+    <string name="choose_hero">Quel sera votre héro pour cette aventure ?</string>
+    <string name="describe_characters">
+        Un explorateur qui possède une carte et a une très bonne perception.
+        Un militaire qui possède une arme à feu et a une très bonne force.
+        Un artificier qui possède une boîte à outils et a de bonne compétence en craft.
+        Un médecin qui possède 2 trousses de soin et qui a beaucoup de connaissances.
+        Vous pouvez  faire un fling droit ou gauche pour passer d’un personnage à un autre et enfin double cliquez quand vous avez choisi .
+    </string>
+
+    <string-array name="list_hero_type">
+        <item>Explorateur</item>
+        <item>Militaire</item>
+        <item>Artificier</item>
+        <item>Médecin</item>
+    </string-array>
+    
+</resources>

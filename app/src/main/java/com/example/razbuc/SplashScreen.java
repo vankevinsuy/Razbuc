@@ -49,8 +49,11 @@ public class SplashScreen extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Intent ResumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
-                    startActivity(ResumeGameActivity);
+//                    Intent ResumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
+//                    startActivity(ResumeGameActivity);
+//                    finish();
+                    Intent NewGameActivity = new Intent(getApplicationContext(), NewGameActivity.class);
+                    startActivity(NewGameActivity);
                     finish();
                 }
             }
