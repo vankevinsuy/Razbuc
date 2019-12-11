@@ -26,6 +26,11 @@ public abstract class GameEntity {
         this.position = position;
     }
 
+    public void setXposition(int x){this.position[0] = x;}
+
+    public void setYposition(int y){this.position[1] = y;}
+
+
     public String getName() {
         return name;
     }

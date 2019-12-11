@@ -247,4 +247,16 @@ public class GameMap {
     public ArrayList<District> getListDistrict() {
         return this.listDistrict;
     }
+
+    public District getDistrictByPosition(int x, int y){
+        District res = null;
+
+        for(District district : this.listDistrict){
+            if(district.getPosition()[0] == x && district.getPosition()[1] == y){
+                res = district;
+            }
+        }
+
+        return res;
+    }
 }
