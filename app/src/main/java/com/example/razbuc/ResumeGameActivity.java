@@ -27,7 +27,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
 
     Hero hero;
-    TextView textView, currentPosition;
+    TextView textView, currentPosition, elements;
     District district;
     GameMap gameMap;
 
@@ -39,6 +39,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
         textView = findViewById(R.id.directionPossible);
         currentPosition  = findViewById(R.id.currentPosition);
+        elements = findViewById(R.id.elements);
 
         mDetector = new GestureDetectorCompat(this,this);
         mDetector.setOnDoubleTapListener(this);
@@ -81,7 +82,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
         textView.setText(directions);
         currentPosition.setText(Integer.toString(hero.getPosition()[0]) + "  " + Integer.toString(hero.getPosition()[1]));
-
     }
 
 
@@ -105,12 +105,15 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
 
     //gesture
-
     @Override
     public boolean onTouchEvent(MotionEvent event){
         if (this.mDetector.onTouchEvent(event)) {
+            refreshDirection();
+            verifyElementAround();
             return true;
         }
+        refreshDirection();
+        verifyElementAround();
         return super.onTouchEvent(event);
     }
 
@@ -185,16 +188,59 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
     private void onFlingTop() {
+        if(verifyMoveDirection("nord")){
+            hero.setYposition(hero.getPosition()[1] - 1);
+            verifyElementAround();
+
+        }
     }
 
     private void onFlingBottom() {
+        if(verifyMoveDirection("sud")){
+            hero.setYposition(hero.getPosition()[1] + 1);
+            verifyElementAround();
+
+        }
     }
 
     private void onFlingLeft() {
+        if(verifyMoveDirection("ouest")){
+            hero.setXposition(hero.getPosition()[0] - 1);
+            verifyElementAround();
+
+        }
     }
 
     private void onFlingRight() {
+        if(verifyMoveDirection("est")){
+            hero.setXposition(hero.getPosition()[0] + 1);
+            verifyElementAround();
+        }
     }
 
+    private boolean verifyMoveDirection(String fling){
+        boolean res = false;
 
+        for (String direction : district.getPossibleDirection()){
+            if(direction.equals(fling)){
+                res = true;
+            }
+        }
+
+        return res;
+    }
+
+    private void verifyElementAround(){
+
+        if (gameMap.getDistrictByPosition(hero.getPosition()).getElements().isEmpty()){
+            elements.setText("nothing around");
+        }
+        else {
+            String element_names = "";
+            for(GameEntity element : gameMap.getDistrictByPosition(hero.getPosition()).getElements()){
+                element_names = element_names + element.getName() + "    ";
+            }
+            elements.setText(element_names);
+        }
+    }
 }

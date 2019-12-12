@@ -259,4 +259,16 @@ public class GameMap {
 
         return res;
     }
+
+    public District getDistrictByPosition(int[] position){
+        District res = null;
+
+        for(District district : this.listDistrict){
+            if(district.getPosition()[0] == position[0] && district.getPosition()[1] == position[1]){
+                res = district;
+            }
+        }
+
+        return res;
+    }
 }

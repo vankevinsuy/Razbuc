@@ -8,17 +8,28 @@
     android:background="@color/colorPrimary">
 
 
+
+
+    <TextView
+        android:id="@+id/currentPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
     <TextView
         android:id="@+id/directionPossible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10sp"/>
+        android:layout_marginTop="10sp"
+        android:layout_below="@id/currentPosition"/>
 
     <TextView
-        android:id="@+id/currentPosition"
+        android:id="@+id/elements"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/directionPossible"/>
 
 
 
