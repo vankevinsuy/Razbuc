@@ -2,5 +2,14 @@
     <string name="app_name">Razbuc</string>
 
     <string name="Firestore_add_new_user">https://us-central1-razbuc-6425f.cloudfunctions.net/start?id=</string>
+    <string name="action_move">move</string>
+    <string name="action_interact">interaction</string>
+
+    <string-array name="gestures_for_interaction">
+        <item>Fling haut</item>
+        <item>Fling bas</item>
+        <item>Fling gauche</item>
+        <item>Fling droit</item>
+    </string-array>
 
 </resources>

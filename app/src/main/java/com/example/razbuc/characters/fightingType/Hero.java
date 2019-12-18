@@ -3,7 +3,7 @@ package com.example.razbuc.characters.fightingType;
 import com.example.razbuc.characters.Character;
 import com.example.razbuc.characters.FightingChar;
 import com.example.razbuc.items.Item;
-import com.example.razbuc.items.Vehicle;
+import com.example.razbuc.items.Vehicule;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
@@ -15,8 +15,8 @@ public class Hero extends FightingChar {
     final static int BASIC_MOVEMENT = 1;        // Moving 1 box at a time
 
     private int basic_movement;
-    private int real_movement;      // Basic movement + Vehicle movement
-    private Vehicle vehicle;
+    private int real_movement;      // Basic movement + Vehicule movement
+    private Vehicule vehicule;
     private ArrayList<Character> allies;
     private String type;        // Possible types : Artificer, Explorer, Medic, SergeantMajor
 
@@ -44,12 +44,12 @@ public class Hero extends FightingChar {
         this.basic_movement = movement;
     }
 
-    public Vehicle getVehicle() {
-        return vehicle;
+    public Vehicule getVehicule() {
+        return vehicule;
     }
 
-    public void setVehicle(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public void setVehicule(Vehicule vehicule) {
+        this.vehicule = vehicule;
     }
 
     public ArrayList<Character> getAllies() {
@@ -87,10 +87,10 @@ public class Hero extends FightingChar {
     }
 
 //    public void computeReal_movement() {
-//        if (this.vehicle == null) {
+//        if (this.vehicule == null) {
 //            setReal_movement(this.basic_movement);
 //        } else {
-//            setReal_movement(this.basic_movement + this.vehicle.getValue());
+//            setReal_movement(this.basic_movement + this.vehicule.getValue());
 //        }
 //    }
 }

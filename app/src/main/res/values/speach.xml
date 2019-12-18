@@ -25,5 +25,7 @@
         <item>Artificier</item>
         <item>Médecin</item>
     </string-array>
-    
+
+
+    <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
 </resources>

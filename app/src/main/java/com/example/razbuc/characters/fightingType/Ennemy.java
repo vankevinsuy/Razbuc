@@ -2,7 +2,6 @@ package com.example.razbuc.characters.fightingType;
 
 import com.example.razbuc.characters.FightingChar;
 import com.example.razbuc.items.Item;
-import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
 

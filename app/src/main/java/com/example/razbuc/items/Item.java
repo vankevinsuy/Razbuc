@@ -1,13 +1,11 @@
 package com.example.razbuc.items;
 
-import com.example.razbuc.GameEntity;
-
-public abstract class Item extends GameEntity {
+public abstract class Item extends com.example.razbuc.GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
     private int[] value;
-    private String type;        // Possible types : Consumable, Misc, Paper map, Toolbox, Vehicle, Weapon
+    private String type;        // Possible types : Consumable, Misc, Paper map, Toolbox, Vehicule, Weapon
     private int durability;
     private int price;          // By default, this.price = this.value for every item
 

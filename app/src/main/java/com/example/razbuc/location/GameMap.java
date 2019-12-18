@@ -10,7 +10,7 @@ import com.example.razbuc.characters.fightingType.Ennemy;
 import com.example.razbuc.characters.nonFightingType.Merchant;
 import com.example.razbuc.characters.nonFightingType.NeutralChar;
 import com.example.razbuc.items.Item;
-import com.example.razbuc.items.Vehicle;
+import com.example.razbuc.items.Vehicule;
 import com.example.razbuc.location.constructionType.Building;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -23,7 +23,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,7 +85,7 @@ public class GameMap {
                             case "vehicule":
                                 int[] fakeValue = new int[1];
                                 fakeValue[0] = 1;
-                                d.addElements(new Vehicle(name, fakeValue, districtPosition));
+                                d.addElements(new Vehicule(name, fakeValue, districtPosition));
                                 break;
 
                             case "Ennemy":
@@ -201,7 +200,7 @@ public class GameMap {
                                 case "vehicule":
                                     int[] fakeValue = new int[1];
                                     fakeValue[0] = 1;
-                                    d.addElements(new Vehicle(elementName, fakeValue, districtPosition));
+                                    d.addElements(new Vehicule(elementName, fakeValue, districtPosition));
                                     break;
 
                                 case "Ennemy":
@@ -209,7 +208,7 @@ public class GameMap {
                                     int hp = rand.nextInt(20);
                                     int damage = 0;
 
-                                    if(name.equals("Mamie")){
+                                    if(elementName.equals("Mamie")){
                                         damage = rand.nextInt(6);
                                     }
                                     else {
@@ -220,11 +219,11 @@ public class GameMap {
                                     break;
 
                                 case "PNJ":
-                                    switch (name){
+                                    switch (elementName){
                                         case "Marchands":
                                             d.addElements(new Merchant(elementName, new ArrayList<Item>(), districtPosition));
                                             break;
-                                        case "Neutral":
+                                        case "Mamie":
                                             d.addElements(new NeutralChar(elementName, new ArrayList<Item>(), districtPosition));
                                             break;
                                     }

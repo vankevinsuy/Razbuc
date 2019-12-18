@@ -6,12 +6,10 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class NewGameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,
