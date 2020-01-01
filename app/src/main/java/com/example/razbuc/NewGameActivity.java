@@ -19,6 +19,8 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
     private String currentStep;
     private GestureDetectorCompat mDetector;
 
+    private boolean canDetectEvent = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,9 +81,27 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
 
     private void speak(int resourceId) {
+        this.canDetectEvent = false;
         mTTS.setPitch(1);
         mTTS.setSpeechRate(1);
         mTTS.speak(getResources().getString(resourceId), TextToSpeech.QUEUE_ADD, null);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                waitUntilSpeakEnds();
+            }
+        }).start();
+    }
+
+    private void waitUntilSpeakEnds(){
+        while (mTTS.isSpeaking()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.canDetectEvent = true;
     }
 
     @Override
@@ -112,6 +132,9 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
+        if (!this.canDetectEvent)
+            return false;
+
         if (this.mDetector.onTouchEvent(event)) {
             return true;
         }
@@ -120,11 +143,17 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
+
         return false;
     }
 
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
+
         switch (currentStep){
             case "start_new_game":
                 currentStep = "choose_hero";
@@ -142,37 +171,69 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
+
         return false;
     }
 
     @Override
     public boolean onDown(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
+
         return false;
     }
 
     @Override
     public void onShowPress(MotionEvent e) {
-
+        if (!this.canDetectEvent)
+            return;
     }
 
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
+
         return false;
     }
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        if (!this.canDetectEvent)
+            return false;
+
         return false;
     }
 
     @Override
     public void onLongPress(MotionEvent e) {
-
+        if (!this.canDetectEvent)
+            return;
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        return false;
+        if (!this.canDetectEvent)
+            return false;
+
+        if (e1.getX()<e2.getX()){
+            return onFlingRight();
+        }
+        if (e1.getX()>e2.getX()){
+            return onFlingLeft();
+        }
+        return true;
     }
+    public boolean onFlingRight(){
+        speak(R.string.map4);
+        return true;
+    }
+    public boolean onFlingLeft(){
+        speak(R.string.map2);
+        return true;
+    }
+
 
 }
