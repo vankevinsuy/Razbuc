@@ -18,13 +18,15 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
     private TextToSpeech mTTS;
     private String currentStep;
     private GestureDetectorCompat mDetector;
-
+    private String[] heroList;
+    private int selectedHero;
     private boolean canDetectEvent = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_game);
+        heroList=getResources().getStringArray(R.array.list_hero_type);
 
         hideSystemUI();
         mDetector = new GestureDetectorCompat(this,this);
@@ -92,11 +94,23 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
             }
         }).start();
     }
+    private void speak(String textToSpeak){
+        this.canDetectEvent = false;
+        mTTS.setPitch(1);
+        mTTS.setSpeechRate(1);
+        mTTS.speak(textToSpeak, TextToSpeech.QUEUE_ADD, null);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                waitUntilSpeakEnds();
+            }
+        }).start();
+    }
 
     private void waitUntilSpeakEnds(){
         while (mTTS.isSpeaking()) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -153,7 +167,6 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
     public boolean onDoubleTap(MotionEvent e) {
         if (!this.canDetectEvent)
             return false;
-
         switch (currentStep){
             case "start_new_game":
                 currentStep = "choose_hero";
@@ -161,7 +174,14 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
                 currentStep = "describe_characters";
                 speak(R.string.describe_characters);
+                currentStep = "select_hero";
+                selectedHero=0;
+                speak(heroList[selectedHero]);
                 break;
+            case "select_hero":
+                currentStep = "start_game";
+                speak(R.string.story);
+                speak(R.string.initial_state);
 
         }
 
@@ -218,20 +238,29 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
         if (!this.canDetectEvent)
             return false;
 
-        if (e1.getX()<e2.getX()){
+        if (e1.getX()>e2.getX()){
             return onFlingRight();
         }
-        if (e1.getX()>e2.getX()){
+        if (e1.getX()<e2.getX()){
             return onFlingLeft();
         }
         return true;
     }
     public boolean onFlingRight(){
-        speak(R.string.map4);
+        switch (currentStep) {
+            case "select_hero":
+                selectedHero=(selectedHero+1) % heroList.length;
+                speak(heroList[selectedHero]);
+        }
         return true;
     }
-    public boolean onFlingLeft(){
-        speak(R.string.map2);
+    public boolean onFlingLeft() {
+        switch (currentStep) {
+            case "select_hero":
+                selectedHero=(selectedHero-1+heroList.length)% heroList.length;
+                speak(heroList[selectedHero]);
+
+        }
         return true;
     }
 
