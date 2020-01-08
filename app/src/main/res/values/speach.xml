@@ -102,4 +102,6 @@
 
 
     <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
+    <string name="cancel_interaction">Pour refuser intéragir avec environnement et vous déplacer, faire un long press.</string>
+
 </resources>

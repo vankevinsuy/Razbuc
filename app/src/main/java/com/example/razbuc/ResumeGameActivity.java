@@ -344,20 +344,16 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             String element_names = "";
             ArrayList<GameEntity> listOfElements = gameMap.getDistrictByPosition(hero.getPosition()).getElements();
             for(GameEntity element : listOfElements){
-                if(element.isVisited()){
-                    continue;
-                }
-                else {
-                    MapgestureByElement.put(element,availableGesture[indexGesture]);
-                    indexGesture = indexGesture + 1;
+                MapgestureByElement.put(element,availableGesture[indexGesture]);
+                indexGesture = indexGesture + 1;
 
-                    element_names = element_names + element.getName() + "    ";
-                    if(talk){
+                element_names = element_names + element.getName() + "    ";
+                if(talk){
+                    if(!element.isVisited()){
                         speak("autour de moi il y a  " + element.getName());
                         sayHowToInteract(element);
                     }
                 }
-
             }
             elements.setText(element_names);
 
