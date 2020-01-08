@@ -7,6 +7,7 @@ public abstract class GameEntity {
     private String name;
     private String description;
     private int[] position = new int[2];
+    private boolean state = false;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
 
@@ -39,4 +40,11 @@ public abstract class GameEntity {
         this.name = name;
     }
 
+    public boolean isVisited() {
+        return state;
+    }
+
+    public void setVisited(boolean state) {
+        this.state = state;
+    }
 }

@@ -17,6 +17,7 @@ import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
+import com.example.razbuc.location.constructionType.Building;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     private GestureDetectorCompat mDetector;
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-    private HashMap<com.example.razbuc.GameEntity, String> MapgestureByElement;
+    private HashMap<GameEntity, String> MapgestureByElement;
 
     private String CURRENT_ACTION;
 
@@ -129,6 +130,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
     private void introduction(){
         speak(getResources().getString(R.string.resume_game));
+        speak(getResources().getString(R.string.cancel_interaction));
     }
 
 
@@ -186,7 +188,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
     @Override
     public void onLongPress(MotionEvent e) {
-        Toast.makeText(getApplicationContext(), "refuser interaction", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "mode déplacement", Toast.LENGTH_SHORT).show();
+        speak("faire un fling dans une direction pour vous déplacer");
+        CURRENT_ACTION = getResources().getString(R.string.action_move);
     }
 
     @Override
@@ -230,9 +234,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "interaction":
-                speak("interaction activée");
+//                speak("interaction activée");
                 actionByElement("Fling haut");
-                CURRENT_ACTION = getResources().getString(R.string.action_move);
+//                CURRENT_ACTION = getResources().getString(R.string.action_move);
                 break;
         }
     }
@@ -248,9 +252,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "interaction":
-                speak("interaction activée");
+//                speak("interaction activée");
                 actionByElement("Fling bas");
-                CURRENT_ACTION = getResources().getString(R.string.action_move);
+//                CURRENT_ACTION = getResources().getString(R.string.action_move);
                 break;
         }
     }
@@ -266,9 +270,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "interaction":
-                speak("interaction activée");
+//                speak("interaction activée");
                 actionByElement("Fling gauche");
-                CURRENT_ACTION = getResources().getString(R.string.action_move);
+//                CURRENT_ACTION = getResources().getString(R.string.action_move);
                 break;
         }
     }
@@ -284,9 +288,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "interaction":
-                speak("interaction activée");
+//                speak("interaction activée");
                 actionByElement("Fling droit");
-                CURRENT_ACTION = getResources().getString(R.string.action_move);
+//                CURRENT_ACTION = getResources().getString(R.string.action_move);
                 break;
         }
     }
@@ -338,16 +342,22 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
         else {
             String element_names = "";
-            ArrayList<com.example.razbuc.GameEntity> listOfElements = gameMap.getDistrictByPosition(hero.getPosition()).getElements();
-            for(com.example.razbuc.GameEntity element : listOfElements){
-                MapgestureByElement.put(element,availableGesture[indexGesture]);
-                indexGesture = indexGesture + 1;
-
-                element_names = element_names + element.getName() + "    ";
-                if(talk){
-                    speak("autour de moi il y a  " + element.getName());
-                    sayHowToInteract(element);
+            ArrayList<GameEntity> listOfElements = gameMap.getDistrictByPosition(hero.getPosition()).getElements();
+            for(GameEntity element : listOfElements){
+                if(element.isVisited()){
+                    continue;
                 }
+                else {
+                    MapgestureByElement.put(element,availableGesture[indexGesture]);
+                    indexGesture = indexGesture + 1;
+
+                    element_names = element_names + element.getName() + "    ";
+                    if(talk){
+                        speak("autour de moi il y a  " + element.getName());
+                        sayHowToInteract(element);
+                    }
+                }
+
             }
             elements.setText(element_names);
 
@@ -357,12 +367,12 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
     }
 
-    private void sayHowToInteract(com.example.razbuc.GameEntity element){
+    private void sayHowToInteract(GameEntity element){
         String type = element.getClass().getSimpleName();
 
         switch (type){
             case "Building":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour visiter " + element.getName() + " faite un " + entry.getValue());
                     }
@@ -370,7 +380,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "Vehicule":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour prendre " + element.getName() + " faite un " + entry.getValue());
                     }
@@ -378,7 +388,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "Ennemy":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour combattre " + element.getName() + " faite un " + entry.getValue());
                     }
@@ -387,7 +397,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
             case "Merchant":
             case "NeutralChar":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour parler avec " + element.getName() + " faite un " + entry.getValue());
                     }
@@ -397,9 +407,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
     private void actionByElement(String action){
-        com.example.razbuc.GameEntity entity = null;
+        GameEntity entity = null;
 
-        for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+        for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
             if (entry.getValue().equals(action)){
                 entity = entry.getKey();
             }
@@ -410,32 +420,69 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
         switch (type){
             case "Building":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
+                        // recupérer tout ce qu'il y a dans le building et passer le state à true
+                        if(!entity.isVisited()){
+                            Building building = (Building) entity;
+
+                            building.setInventory(new ArrayList<Item>()); // iventaire du building set à vide
+
+                            if(building.getInventory().size() == 0){
+                                speak(entity.getName() + " est vide");
+                            }
+                            else {
+                                for (Item item : building.getInventory()){
+                                    speak(entity.getName() + " ajoutée à l'inventaire.");
+                                    hero.addToInventory(item);
+                                }
+                            }
+                            entity.setVisited(true);
+                        }
+                        else {
+                            speak(entity.getName() + "déjà visité");
+                            continue;
+                        }
                     }
                 }
                 break;
 
             case "Vehicule":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
-                        hero.addToInventory((Item) entity);
-                        speak(entity.getName() + " ajoutée à l'inventaire.");
+                        if(!entity.isVisited()){
+                            hero.addToInventory((Item) entity);
+                            speak(entity.getName() + " ajoutée à l'inventaire.");
+                            entity.setVisited(true);
+                        }
+                        else {
+                            speak(entity.getName() + "déjà visité");
+                            continue;
+                        }
                     }
                 }
                 break;
 
             case "Ennemy":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
+                        if(!entity.isVisited()){
+
+                        }
+                        else {
+                            continue;
+                        }
                     }
                 }
                 break;
 
             case "Merchant":
             case "NeutralChar":
-                for(Map.Entry<com.example.razbuc.GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
+                        if(!entity.isVisited()){
+
+                        }
                     }
                 }
                 break;
