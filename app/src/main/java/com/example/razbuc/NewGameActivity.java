@@ -1,5 +1,6 @@
 package com.example.razbuc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -181,8 +182,10 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
             case "select_hero":
                 currentStep = "start_game";
                 speak(R.string.story);
-                speak(R.string.initial_state);
-
+                Intent resumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
+                resumeGameActivity.putExtra("new", false);
+                resumeGameActivity.putExtra("hero",heroList[selectedHero] );
+                break;
         }
 
 

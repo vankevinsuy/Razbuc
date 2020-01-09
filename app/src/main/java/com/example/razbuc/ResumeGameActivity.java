@@ -1,5 +1,6 @@
 package com.example.razbuc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -13,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
 import com.example.razbuc.characters.fightingType.Hero;
+import com.example.razbuc.characters.fightingType.heroType.Artificer;
+import com.example.razbuc.characters.fightingType.heroType.Explorer;
+import com.example.razbuc.characters.fightingType.heroType.Medic;
+import com.example.razbuc.characters.fightingType.heroType.SergeantMajor;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.District;
@@ -85,7 +90,26 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             }
         });
 
+        Intent intent=getIntent();
+        boolean isNew = intent.getBooleanExtra("new", false);
+        if (isNew){
+            String hero = intent.getStringExtra("hero");
+            switch (hero){
+                case "Artificier":
+                    //this.hero= new Artificer();
+                    break;
+                case "Militaire":
+                    //this.hero=new Explorer();
+                    break;
+                case "Médecin":
+                    //this.hero=new Medic();
+                    break;
+                case "Explorateur":
+                    //this.hero=new SergeantMajor();
+                    break;
+            }
 
+        }
 // FAKE DATAS
         int[] Position = new int[2];
 

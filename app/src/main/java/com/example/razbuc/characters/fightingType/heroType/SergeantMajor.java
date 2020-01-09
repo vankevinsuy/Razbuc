@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class SergeantMajor extends Hero {
 
-    final static String HERO_TYPE = "SergeantMajor";
+    final static String HERO_TYPE = "SergentMajor";
 
     public SergeantMajor(String name,
                          ArrayList<Item> inventory,
