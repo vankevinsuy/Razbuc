@@ -185,6 +185,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                 Intent resumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
                 resumeGameActivity.putExtra("new", false);
                 resumeGameActivity.putExtra("hero",heroList[selectedHero] );
+                startActivity(resumeGameActivity);
                 break;
         }
 

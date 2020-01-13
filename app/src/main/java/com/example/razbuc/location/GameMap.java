@@ -9,8 +9,12 @@ import com.example.razbuc.LocalDatabase.RazbucLocalDb;
 import com.example.razbuc.characters.fightingType.Ennemy;
 import com.example.razbuc.characters.nonFightingType.Merchant;
 import com.example.razbuc.characters.nonFightingType.NeutralChar;
+import com.example.razbuc.items.Consumable;
 import com.example.razbuc.items.Item;
+import com.example.razbuc.items.PaperMap;
+import com.example.razbuc.items.Toolbox;
 import com.example.razbuc.items.Vehicule;
+import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.constructionType.Building;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -191,10 +195,39 @@ public class GameMap {
                             String elementType = element.get("type").toString();
                             String elementName = element.get("nom").toString();
                             boolean elementState = (boolean) element.get("state");
+                            ArrayList<String> items = (ArrayList<String>) element.get("items");
+
+                            int[] value = new int[2];
+
+                            value[0] = 0;
+                            value[1] = 0;
+
+                            ArrayList<Item> inventory = new ArrayList<>();
+
+                            if (items != null)
+                            {
+                                for (String s : items){
+                                    switch (s){
+                                        case "trousse de soin":
+                                            inventory.add(new Consumable(s, value, 1, districtPosition));
+                                            break;
+                                        case "pistolet":
+                                            inventory.add(new Weapon(s, value, 2, districtPosition));
+                                            break;
+                                        case "boite à outils":
+                                            inventory.add(new Toolbox(s, value, 1, districtPosition));
+                                            break;
+                                        case "carte":
+                                            inventory.add(new PaperMap(s, value, 1, districtPosition));
+                                            break;
+                                    }
+                                }
+                            }
+
 
                             switch (elementType){
                                 case "building":
-                                    d.addElements(new Building(elementName, districtPosition, elementType, null));
+                                    d.addElements(new Building(elementName, districtPosition, elementType, inventory));
                                     break;
 
                                 case "vehicule":
