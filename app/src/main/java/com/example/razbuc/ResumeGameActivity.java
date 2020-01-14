@@ -96,16 +96,16 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             String hero = intent.getStringExtra("hero");
             switch (hero){
                 case "Artificier":
-                    //this.hero= new Artificer();
+                    this.hero= new Artificer();
                     break;
                 case "Militaire":
-                    //this.hero=new Explorer();
+                    this.hero=new Explorer();
                     break;
                 case "Médecin":
-                    //this.hero=new Medic();
+                    this.hero=new Medic();
                     break;
                 case "Explorateur":
-                    //this.hero=new SergeantMajor();
+                    this.hero=new SergeantMajor();
                     break;
             }
 
@@ -124,13 +124,13 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         ArrayList<Item> inventory = new ArrayList<>();
         Weapon arme = new Weapon("couteau", value, 5, Position);
 
-        hero = new Hero(
+        /*hero = new Hero(
                 "jojjo",
                 inventory,
                 Position,
                 100,
                 20,
-                arme);
+                arme);*/
 
     }
 

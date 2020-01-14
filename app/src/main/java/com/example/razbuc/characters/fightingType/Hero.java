@@ -7,6 +7,7 @@ import com.example.razbuc.items.Vehicule;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Hero extends FightingChar {
 
@@ -19,19 +20,27 @@ public class Hero extends FightingChar {
     private Vehicule vehicule;
     private ArrayList<Character> allies;
     private String type;        // Possible types : Artificer, Explorer, Medic, SergeantMajor
+    private int perception;
+    private int craft;
+    private int connaissance;
+    private List<Item> inventory;
+
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     public Hero(String name,
-                ArrayList<Item> inventory,
-                int[] position,
-                int health_points,
-                int basic_damages,
+                List<Item> inventory,
+                int perception,
+                int craft,
+                int connaissance,
+                int force,
                 Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages, null);
-        System.out.println("Constructing the hero ...");
+        super(name, new int[] {0,0}, 20, 5, force, weapon);
+        this.perception = perception;
+        this.craft= craft;
+        this.connaissance= connaissance;
+        this.inventory = inventory;
         this.basic_movement = BASIC_MOVEMENT;
-//        this.computeReal_movement();
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
@@ -93,4 +102,12 @@ public class Hero extends FightingChar {
 //            setReal_movement(this.basic_movement + this.vehicule.getValue());
 //        }
 //    }
+
+    public void addToInventory(Item item) {
+        this.inventory.add(item);
+    }
+
+    public void removeFromInventory(Item item) {
+        this.inventory.remove(item);
+    }
 }
