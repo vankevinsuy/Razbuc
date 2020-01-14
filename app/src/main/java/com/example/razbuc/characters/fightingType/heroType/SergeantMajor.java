@@ -5,18 +5,14 @@ import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SergeantMajor extends Hero {
 
     final static String HERO_TYPE = "SergentMajor";
 
-    public SergeantMajor(String name,
-                         ArrayList<Item> inventory,
-                         int[] position,
-                         int health_points,
-                         int basic_damages,
-                         Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages, weapon);
+    public SergeantMajor() {
+        super(HERO_TYPE, Arrays.asList(new Item[] { new Weapon("Pistolet",new int[] {},new int[] {-1,-1}) }), 12,12,12,16,null);
         setType(HERO_TYPE);
     }
 }

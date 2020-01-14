@@ -13,17 +13,19 @@ public abstract class FightingChar extends Character {
     private int basic_damages;
     private int real_damages;       // Basic_damages + Weapon damage
     private Weapon weapon;
+    private int force;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     public FightingChar(String name,
-                        ArrayList<Item> inventory,
                         int[] position,
                         int health_points,
                         int basic_damages,
+                        int force,
                         Weapon weapon) {
-        super(name, inventory, position);
+        super(name, position);
         System.out.println("Constructing a fighting character ...");
+        this.force=force;
         this.health_points = health_points;
         this.basic_damages = basic_damages;
         this.weapon = weapon;

@@ -6,22 +6,15 @@ import com.example.razbuc.items.PaperMap;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Explorer extends Hero {
 
     final static String HERO_TYPE = "Explorer";
 
-    /*public Explorer (){
-        super("Litota", new ArrayList<Item>(new PaperMap()));
-    }*/
 
-    public Explorer(String name,
-                    ArrayList<Item> inventory,
-                    int[] position,
-                    int health_points,
-                    int basic_damages,
-                    Weapon weapon) {
-        super(name, inventory, position, health_points, basic_damages, weapon);
+    public Explorer() {
+        super(HERO_TYPE, Arrays.asList(new Item[] { new PaperMap("Carte",new int[] {},new int[] {-1,-1}) }), 16,12,12,12,null);
         setType(HERO_TYPE);
     }
 }
