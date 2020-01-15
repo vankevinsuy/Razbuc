@@ -13,12 +13,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import com.example.razbuc.characters.NonFightingChar;
+import com.example.razbuc.characters.fightingType.Ennemy;
 import com.example.razbuc.characters.fightingType.Hero;
 import com.example.razbuc.characters.fightingType.heroType.Artificer;
 import com.example.razbuc.characters.fightingType.heroType.Explorer;
 import com.example.razbuc.characters.fightingType.heroType.Medic;
 import com.example.razbuc.characters.fightingType.heroType.SergeantMajor;
+import com.example.razbuc.items.Consumable;
 import com.example.razbuc.items.Item;
+import com.example.razbuc.items.Misc;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
@@ -416,6 +420,12 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "Merchant":
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                    if(element.equals(entry.getKey())){
+                        speak("pour echanger avec " + element.getName() + " faite un " + entry.getValue());
+                    }
+                }
+                break;
             case "NeutralChar":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
@@ -487,9 +497,11 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
-
+                            Ennemy ennemy = (Ennemy) entity;
+                            combatMode(ennemy);
                         }
                         else {
+                            speak("aucun monstre dans les parages");
                             continue;
                         }
                     }
@@ -497,16 +509,58 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 break;
 
             case "Merchant":
+                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
+                    if (entity.equals(entry.getKey())) {
+                        speak("Voyons ce qui nous intéresse");
+                        NonFightingChar merchant = (NonFightingChar) entity;
+                        buyingMode(merchant);
+                    }
+                }
             case "NeutralChar":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
-
+                            speak("Wassup");
+                        }
+                        else {
+                            speak("Wassup the sequel");
                         }
                     }
                 }
                 break;
         }
 
+    }
+
+    private void combatMode(Ennemy ennemy) {
+        Hero hero = this.hero;
+
+        // Fight to the death
+        while (hero.getHealth_points() > 0 && ennemy.getHealth_points() > 0) {
+            // Hero attacks first
+            ennemy.loseHealth_points(hero.getReal_damages());
+            // Ennemy attacks second
+            hero.loseHealth_points(ennemy.getBasic_damages());
+        }
+
+        // Fight results
+        if (ennemy.getHealth_points() <= 0) {
+            speak("You won the fight");
+        } else {
+            speak ("You lose the fight");
+        }
+    }
+
+    private void buyingMode(NonFightingChar merchant) {
+        Hero hero = this.hero;
+
+        Misc money = new Misc("Money", new int[] {0});
+        Consumable pills = new Consumable("Pills", new int[] {3,5}, new int[] {0});
+        for (Item item : hero.getInventory()) {
+            if (item.equals(money)) {
+                hero.removeFromInventory(item);
+                hero.addToInventory(pills);
+            }
+        }
     }
 }
