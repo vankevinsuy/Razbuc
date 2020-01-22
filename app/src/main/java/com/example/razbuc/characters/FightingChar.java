@@ -4,6 +4,7 @@ import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class FightingChar extends Character {
 
@@ -18,12 +19,13 @@ public abstract class FightingChar extends Character {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     public FightingChar(String name,
+                        List<Item> inventory,
                         int[] position,
                         int health_points,
                         int basic_damages,
                         int force,
                         Weapon weapon) {
-        super(name, position);
+        super(name, inventory, position);
         System.out.println("Constructing a fighting character ...");
         this.force=force;
         this.health_points = health_points;
