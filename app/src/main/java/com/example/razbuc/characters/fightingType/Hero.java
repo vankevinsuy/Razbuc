@@ -23,7 +23,6 @@ public class Hero extends FightingChar {
     private int perception;
     private int craft;
     private int connaissance;
-    private List<Item> inventory;
 
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
@@ -35,11 +34,10 @@ public class Hero extends FightingChar {
                 int connaissance,
                 int force,
                 Weapon weapon) {
-        super(name, new int[] {0,0}, 20, 5, force, weapon);
+        super(name, inventory, new int[] {0,0}, 20, 5, force, weapon);
         this.perception = perception;
         this.craft= craft;
         this.connaissance= connaissance;
-        this.inventory = inventory;
         this.basic_movement = BASIC_MOVEMENT;
     }
 
@@ -103,11 +101,5 @@ public class Hero extends FightingChar {
 //        }
 //    }
 
-    public void addToInventory(Item item) {
-        this.inventory.add(item);
-    }
 
-    public void removeFromInventory(Item item) {
-        this.inventory.remove(item);
-    }
 }

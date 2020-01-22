@@ -72,16 +72,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 if (status == TextToSpeech.SUCCESS)
                 {
                     int result = mTTS.setLanguage(Locale.FRENCH);
-
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "Language not supported");
                     }
-
-                    else
-                    {
-                        introduction();
-                    }
-
                 }
                 else
                 {
@@ -108,7 +101,10 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     this.hero=new SergeantMajor();
                     break;
             }
-
+        }
+        else{
+            //récupération du héros via l'enregistrement dans la base qui n'est pas encore fait
+            speak(R.string.resume_game);
         }
 // FAKE DATAS
         int[] Position = new int[2];
@@ -152,10 +148,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
-    private void introduction(){
-        speak(getResources().getString(R.string.resume_game));
-        speak(getResources().getString(R.string.cancel_interaction));
-    }
+
 
 
 //    GESTURE METHODS IMPLEMENTATION
@@ -330,6 +323,11 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         mTTS.setPitch(1);
         mTTS.setSpeechRate(1);
         mTTS.speak(txt, TextToSpeech.QUEUE_ADD,null, txt);
+    }
+    private void speak(int resourceId) {
+        mTTS.setPitch(1);
+        mTTS.setSpeechRate(1);
+        mTTS.speak(getResources().getString(resourceId), TextToSpeech.QUEUE_ADD, null);
     }
 
     private void refreshDirection(){

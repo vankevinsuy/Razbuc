@@ -104,7 +104,7 @@ public class GameMap {
                                     damage = rand.nextInt(4);
                                 }
 
-                                d.addElements(new Ennemy(name, null, districtPosition, hp, damage));
+                                d.addElements(new Ennemy(name, districtPosition, hp, damage, 12, null));
                                 break;
 
                             case "PNJ":
@@ -248,7 +248,7 @@ public class GameMap {
                                         damage = rand.nextInt(4);
                                     }
 
-                                    d.addElements(new Ennemy(elementName, null, districtPosition, hp, damage));
+                                    d.addElements(new Ennemy(elementName, districtPosition, hp, damage, 12, null));
                                     break;
 
                                 case "PNJ":
