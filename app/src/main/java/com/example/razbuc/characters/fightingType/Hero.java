@@ -102,4 +102,12 @@ public class Hero extends FightingChar {
 //    }
 
 
+    public void removeFromInventory(Item item) {
+        this.inventory.remove(item);
+    }
+
+    public List<Item> getInventory () {
+        return inventory;
+    }
+
 }
