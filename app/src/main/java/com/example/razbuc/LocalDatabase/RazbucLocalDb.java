@@ -79,4 +79,9 @@ public class RazbucLocalDb extends SQLiteOpenHelper {
 
         return res;
     }
+
+    public void clearDatabase(){
+        SQLiteDatabase database = this.getWritableDatabase();
+        database.execSQL("DELETE FROM " + TABLE_user);
+    }
 }

@@ -6,10 +6,10 @@
     <string name="action_interact">interaction</string>
 
     <string-array name="gestures_for_interaction">
-        <item>Fling haut</item>
-        <item>Fling bas</item>
-        <item>Fling gauche</item>
-        <item>Fling droit</item>
+        <item>fling haut</item>
+        <item>fling bas</item>
+        <item>fling gauche</item>
+        <item>fling droit</item>
     </string-array>
 
 </resources>

@@ -16,7 +16,7 @@
         Un militaire qui possède une arme à feu et a une très bonne force.
         Un artificier qui possède une boîte à outils et a de bonne compétence en craft.
         Un médecin qui possède 2 trousses de soin et qui a beaucoup de connaissances.
-        Vous pouvez  faire un fling droit ou gauche pour passer d’un personnage à un autre et enfin double cliquez quand vous avez choisi.
+        Vous pouvez  faire un fling droit ou gauche pour passer d’un personnage à un autre, et enfin double cliquez quand vous avez choisi.
     </string>
 
     <string name="story">
@@ -27,15 +27,15 @@
         et mangé de la viande pour la première fois de sa vie. Ce Razbuc a ensuite contaminé d\’autre
         personne par le sang en les mordants. Vous allez me dire pourquoi Razbuc et non Zombie.
         En fait, un lycéen de 15 ans a trouvé ce nom et l’a partagé sous forme de même qui est
-        ensuite devenu viral. Votre tourisme étant fini il est temps de rentrer chez vous à Rennes.
+        ensuite devenu viral. Votre tourisme étant fini, il est temps de rentrer chez vous à Rennes.
         Cette aventure ne sera pas sans encombre avec les Razbucs qui vous imagine en côte de bœuf
         ou encore les Nagaz, ce gang qui gouverne Paris et les villes alentours et qui sont prêt à
-        piller tout ce qui bouge. Plus personne ne vous protège il n’y a plus de gouvernement,
-        plus de force militaire peut être que trouver d’autres survivants pourrez-vous aider dans
+        piller tout ce qui bouge. Plu personne ne vous protège, il n’y a plu de gouvernement,
+        plu de force militaire, peut être que trouver d’autres survivants pourrez-vous aider dans
         votre voyage.
     </string>
 
-    <string name="initial_state">
+    <string name="map1">
         Vous sortez donc de l’hôtel dans lequel vous avez séjourné durant vos vacances.
         Dehors il n’y a qu’une voiture elle a l’air solide vous vous dites qu’elle pourrait
         facilement rouler sur les Razbucs. Vous pouvez faire une action de recherche pour
@@ -44,32 +44,32 @@
         Vous pouvez également descendre la rue avec un fling bas ou aller vers la droite
         avec un fling droit.
     </string>
-
-    <string name="cannot_use_car">
-        La voiture n’a pas de clé et vous ne savez pas comment démarrer une voiture sans clé.
-        Vous pouvez descendre la rue avec un fling bas ou aller vers la droite avec un fling droit.
-    </string>
-
-    <string name="map4">
-        Vous tombez nez à nez avec une Razbuc qui devait être séduisante de son vivant, elle commence
-        à courir vers vous la bave aux lèvres.
-    </string>
-
-    <string name="victory_map4">
-        Vous avez survécu à ce combat difficile. “Vous pouvez à présent descendre la rue,
-        monter la rue ou aller vers la droite.
-    </string>
-
     <string name="map2">
         Vous arrivez à l’Hôpital, vous vous dites qu’il y a certainement plus de Razbuc qu’autre part.
         Il sera certainement risqué d’entrer dedans mais vous avez besoin de trousse de soin pour survivre
         durant votre voyage. Est ce que vous souhaitez fouiller ? Une action de fouille s\'effectue avec une
         rotation du téléphone.
     </string>
+    <string name="map4">
+        Vous tombez nez à nez avec une Razbuc qui devait être séduisante de son vivant, elle commence
+        à courir vers vous la bave aux lèvres.
+    </string>
+    <string name="map7">
+        Vous arrivez au poste de police. Vous trouverez peut-être une arme ici. Voulez-vous effectuer
+        une action de fouille ?
+    </string>
 
-    <!-- pour les actions de fouille comme je ne sais pas ce que le joueur trouvera exactement je coupe le texte
-       en deux pour intégrer la trouvaille exact dans le code en sachant qu'on peut très bien dire
-       "vous avez trouvé 0 trousses de soin/pistolet..."-->
+    <string name="cannot_use_car">
+        La voiture n’a pas de clé et vous ne savez pas comment démarrer une voiture sans clé.
+        Vous pouvez descendre la rue avec un fling bas ou aller vers la droite avec un fling droit.
+    </string>
+
+
+
+    <string name="victory_map4">
+        Vous avez survécu à ce combat difficile. “Vous pouvez à présent descendre la rue,
+        monter la rue ou aller vers la droite.
+    </string>
 
     <string name="search_map2_1">
         Vous avez trouvé...
@@ -77,11 +77,6 @@
 
     <string name="search_map2_2">
         trousses de soin.Vous pouvez à présent descendre la rue, aller ver la droite ou vers la gauche
-    </string>
-
-    <string name="map7">
-        Vous arrivez au poste de police. Vous trouverez peut-être une arme ici. Voulez-vous effectuer
-        une action de fouille ?
     </string>
 
     <string name="search_map7_1" >
@@ -103,5 +98,7 @@
 
     <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
     <string name="cancel_interaction">Pour refuser intéragir avec environnement et vous déplacer, faire un long press.</string>
+    <string name="mode_deplacement">Faites un clic long pour passer en mode déplacement.</string>
+    <string name="mode_interaction">Faites un clic pour passer en mode intéraction.</string>
 
 </resources>

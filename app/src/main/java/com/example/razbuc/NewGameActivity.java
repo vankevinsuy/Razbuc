@@ -174,7 +174,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                 speak(R.string.choose_hero);
 
                 currentStep = "describe_characters";
-                speak(R.string.describe_characters);
+                //speak(R.string.describe_characters);
                 currentStep = "select_hero";
                 selectedHero=0;
                 speak(heroList[selectedHero]);
@@ -183,7 +183,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                 currentStep = "start_game";
                 speak(R.string.story);
                 Intent resumeGameActivity = new Intent(getApplicationContext(), ResumeGameActivity.class);
-                resumeGameActivity.putExtra("new", false);
+                resumeGameActivity.putExtra("new", true);
                 resumeGameActivity.putExtra("hero",heroList[selectedHero] );
                 startActivity(resumeGameActivity);
                 break;

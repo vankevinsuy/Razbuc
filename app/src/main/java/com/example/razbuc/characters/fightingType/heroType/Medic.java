@@ -13,7 +13,7 @@ public class Medic extends Hero {
     final static String HERO_TYPE = "Medic";
 
     public Medic() {
-        super(HERO_TYPE, Arrays.asList(new Item[] { new Consumable("Trousse de soins",new int[] {},new int[] {-1,-1}) }), 12,12,16,12,null);
+        super(HERO_TYPE, Arrays.asList(new Item[] { new Consumable("Trousse de soins",new int[] {0},new int[] {-1,-1}) }), 12,12,16,12,null);
         setType(HERO_TYPE);
     }
 }

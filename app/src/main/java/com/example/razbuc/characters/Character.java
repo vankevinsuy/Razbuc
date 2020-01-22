@@ -31,4 +31,8 @@ public abstract class Character extends GameEntity {
         this.inventory.remove(item);
     }
 
+    public List<Item> getInventory () {
+        return inventory;
+    }
+
 }
