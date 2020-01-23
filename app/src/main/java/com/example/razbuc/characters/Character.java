@@ -17,7 +17,7 @@ public abstract class Character extends GameEntity {
                      List<Item> inventory,
                      int[] position) {
         System.out.println("Constructing a character ...");
-        this.inventory = inventory;
+        this.inventory = new ArrayList<>(inventory);
         this.setName(name);
         this.setPosition(position);
     }

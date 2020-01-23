@@ -24,6 +24,14 @@ public class Hero extends FightingChar {
     private int craft;
     private int connaissance;
 
+    public boolean hasToolbox(){
+        for (Item item : this.getInventory()){
+            if (item.getType().equals("Toolbox"))
+                return true;
+        }
+        return false;
+    }
+
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
@@ -81,6 +89,40 @@ public class Hero extends FightingChar {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
+
+    public int getPerception() {
+        return perception;
+    }
+
+    public void setPerception(int perception) {
+        this.perception = perception;
+    }
+
+    public int getCraft() {
+        return craft;
+    }
+
+    public void setCraft(int craft) {
+        this.craft = craft;
+    }
+
+    public int getConnaissance() {
+        return connaissance;
+    }
+
+    public void setConnaissance(int connaissance) {
+        this.connaissance = connaissance;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods

@@ -24,4 +24,14 @@ public class Misc extends Item {
         super(name, MISC_VALUE, ITEM_TYPE, MISC_DURABILITY, position);
         System.out.println("Constructing a misc ...");
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
 }

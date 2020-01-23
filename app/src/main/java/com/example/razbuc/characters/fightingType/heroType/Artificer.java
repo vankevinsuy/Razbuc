@@ -16,6 +16,5 @@ public class Artificer extends Hero {
     public Artificer() {
         super(HERO_TYPE, Arrays.asList(new Item[] { new Toolbox("Boite à outils",new int[] {0},new int[] {-1,-1}) }), 12,16,12,12,null);
         setType(HERO_TYPE);
-
     }
 }

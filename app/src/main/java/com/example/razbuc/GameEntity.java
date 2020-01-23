@@ -4,6 +4,7 @@ public abstract class GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
+    private String type;
     private String name;
     private String description;
     private int[] position = new int[2];
@@ -47,4 +48,15 @@ public abstract class GameEntity {
     public void setVisited(boolean state) {
         this.state = state;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public abstract String getNameWithPronoun();
+    public abstract String getFullName();
 }

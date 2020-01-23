@@ -22,4 +22,13 @@ public class Merchant extends NonFightingChar {
     }
 
 
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
 }

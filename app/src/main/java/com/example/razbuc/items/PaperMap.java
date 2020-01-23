@@ -25,4 +25,14 @@ public class PaperMap extends Item {
         super(name, value, ITEM_TYPE, CONSUMABLE_DURABILITY, position);
         System.out.println("Constructing a paper map ...");
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return "La carte";
+    }
+
+    @Override
+    public String getFullName() {
+        return "Une carte";
+    }
 }

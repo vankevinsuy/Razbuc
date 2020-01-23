@@ -25,4 +25,14 @@ public class Toolbox extends Item {
         super(name, value, ITEM_TYPE, CONSUMABLE_DURABILITY, position);
         System.out.println("Constructing a toolbox ...");
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return "La boite à outil";
+    }
+
+    @Override
+    public String getFullName() {
+        return "Une boite à outil";
+    }
 }

@@ -27,4 +27,14 @@ public class Weapon extends Item {
         System.out.println("Constructing a weapon ...");
         setPrice(this.getValue()[0] * 2);         // By default, this.price = this.value*2 for every weapon
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return "L'arme";
+    }
+
+    @Override
+    public String getFullName() {
+        return "Une arme";
+    }
 }

@@ -35,7 +35,7 @@ public class SplashScreen extends AppCompatActivity {
 
         Picasso.get().load(R.drawable.splash).fit().into(this.splashScreenImgView);
 
-        //razbucLocalDb.clearDatabase(); // Sert lorsque la db n'est pas supprimé à la désinstallation de l'appli (bug ?)
+        razbucLocalDb.clearDatabase(); // Sert lorsque la db n'est pas supprimé à la désinstallation de l'appli (bug ?)
 
         // after 2 seconds, destroy SplashScreen Activity and launch MainActivity
         Handler handler = new Handler();

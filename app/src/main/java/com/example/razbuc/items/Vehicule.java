@@ -4,7 +4,7 @@ public class Vehicule extends Item {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static String ITEM_TYPE = "Vehicule";
+    final static String ITEM_TYPE = "vehicule";
     final static int VEHICLE_DURABILITY = 10;        // If durability not set, this.durability = 10
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
@@ -26,5 +26,15 @@ public class Vehicule extends Item {
         super(name, value, ITEM_TYPE, VEHICLE_DURABILITY, position);
         System.out.println("Constructing a vehicle ...");
         setPrice(this.getValue()[0] * 10);         // By default, this.price = this.value * 10 for every vehicle
+    }
+
+    @Override
+    public String getNameWithPronoun() {
+        return "La voiture";
+    }
+
+    @Override
+    public String getFullName() {
+        return "Une voiture";
     }
 }

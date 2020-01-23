@@ -25,4 +25,14 @@ public class Consumable extends Item {
         super(name, value, ITEM_TYPE, CONSUMABLE_DURABILITY, position);
         System.out.println("Constructing a consumable ...");
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return "La trousse de soins";
+    }
+
+    @Override
+    public String getFullName() {
+        return "Une trousse de soins";
+    }
 }

@@ -68,6 +68,14 @@ public abstract class FightingChar extends Character {
         this.weapon = weapon;
     }
 
+    public int getForce() {
+        return force;
+    }
+
+    public void setForce(int force) {
+        this.force = force;
+    }
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
 
     public void gainHealth_points(int value) {

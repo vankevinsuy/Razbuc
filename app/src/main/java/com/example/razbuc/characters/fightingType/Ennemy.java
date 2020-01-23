@@ -18,4 +18,14 @@ public class Ennemy extends FightingChar {
                   Weapon weapon) {
         super(name, new ArrayList<Item>(), position, health_points, basic_damages, force, weapon);
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
 }

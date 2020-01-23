@@ -23,20 +23,21 @@ import com.example.razbuc.characters.fightingType.heroType.SergeantMajor;
 import com.example.razbuc.items.Consumable;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Misc;
-import com.example.razbuc.items.Weapon;
+import com.example.razbuc.location.Construction;
 import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
-import com.example.razbuc.location.constructionType.Building;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 public class ResumeGameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener,
         GestureDetector.OnDoubleTapListener{
 
     private TextToSpeech mTTS;
+    private boolean TextToSpeechReady;
     private GestureDetectorCompat mDetector;
     private static final int SWIPE_THRESHOLD = 100;
     private static final int SWIPE_VELOCITY_THRESHOLD = 100;
@@ -69,6 +70,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         CURRENT_ACTION = getResources().getString(R.string.action_move);
 
         //set text reader
+        TextToSpeechReady = false;
         mTTS = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -79,7 +81,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         Log.e("TTS", "Language not supported");
                     }
                     else{
-                        init();
+                        TextToSpeechReady = true;
                     }
                 }
                 else
@@ -88,6 +90,25 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
             }
         });
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (!TextToSpeechReady || !gameMap.isReady()){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        init();
+                    }
+                });
+            }
+        }).start();
     }
 
     private void init(){
@@ -95,6 +116,8 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         boolean isNew = intent.getBooleanExtra("new", false);
         if (isNew){
             String hero = intent.getStringExtra("hero");
+            if (hero == null)
+                return;
             switch (hero){
                 case "Artificier":
                     this.hero= new Artificer();
@@ -109,13 +132,13 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     this.hero=new SergeantMajor();
                     break;
             }
-            //speak(R.string.initial_state);
         }
         else{
             //récupération du héros via l'enregistrement dans la base qui n'est pas encore fait
             speak(R.string.resume_game);
             this.hero= new Artificer();
         }
+        speak(R.string.information);
         mDetector = new GestureDetectorCompat(this,this);
         mDetector.setOnDoubleTapListener(this);
         describeDistrict();
@@ -160,26 +183,41 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             }
             district.setVisited(true);
         }
+        CURRENT_ACTION = getResources().getString(R.string.action_interact);
+        verifyElementAround(false, false);
     }
 
     private void refreshDirection(){
         district = gameMap.getDistrictByPosition(hero.getPosition()[0],hero.getPosition()[1]);
-        String directions = "";
-        String sayDirections = "Vous pouvez vous déplacer vers ";
+        StringBuilder directions = new StringBuilder();
+        StringBuilder sayDirections = new StringBuilder("Vous pouvez vous déplacer vers ");
         boolean first = true;
         for(String direction : district.getPossibleDirection()){
-            directions = directions + "   " + direction;
+            directions.append("   ").append(direction);
+            String apostrophe = (direction.equals("nord") || direction.equals("sud")) ? "le " : "l'";
             if (first) {
-                sayDirections += ((direction.equals("nord") || direction.equals("sud")) ? "le " : "l'") + direction;
+                sayDirections.append(apostrophe).append(adaptDirectionForSpeak(direction));
                 first = false;
             }
             else
-                sayDirections += " ou " + ((direction.equals("nord") || direction.equals("sud")) ? "le " : "l'") + direction;
+                sayDirections.append(", ou ").append(apostrophe).append(adaptDirectionForSpeak(direction));
         }
-        sayDirections += ".";
-        speak(sayDirections);
-        textView.setText(directions);
-        currentPosition.setText(Integer.toString(hero.getPosition()[0]) + "  " + Integer.toString(hero.getPosition()[1]));
+        sayDirections.append(".");
+        speak(sayDirections.toString());
+        textView.setText(directions.toString());
+        currentPosition.setText((hero.getPosition()[0] + "  " + hero.getPosition()[1]));
+    }
+
+    private String adaptDirectionForSpeak(String direction){
+        switch (direction){
+            case "est":
+                return "èste";
+            case "nord":
+            case "sud":
+            case "ouest":
+                return direction;
+        }
+        return "";
     }
 
     private void verifyElementAround(boolean talk, boolean modifyCURRENT_ACTION){
@@ -188,39 +226,42 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         String[] availableGesture = getResources().getStringArray(R.array.gestures_for_interaction);
         int indexGesture = 0;
         boolean firstElement = true;
-
-        if (gameMap.getDistrictByPosition(hero.getPosition()).getElements().isEmpty()){
+        if (gameMap.getDistrictByPosition(hero.getPosition()).nothingToInteract()){
             elements.setText("nothing around");
-            speak("rien autour de moi.");
+            if (talk)
+                speak("Il n'y a rien autour de moi.");
         }
         else {
-            String element_names = "";
+            StringBuilder element_names = new StringBuilder();
             ArrayList<GameEntity> listOfElements = gameMap.getDistrictByPosition(hero.getPosition()).getElements();
             for(GameEntity element : listOfElements){
                 MapgestureByElement.put(element,availableGesture[indexGesture]);
                 indexGesture = indexGesture + 1;
 
-                element_names = element_names + element.getName() + "    ";
+                element_names.append(element.getName()).append("    ");
                 if(talk){
                     if(!element.isVisited()){
                         if (firstElement) {
-                            speak("Autour de moi il y a  " + element.getName());
+                            if (talk)
+                                speak("Autour de moi il y a " + element.getFullName());
                             firstElement = false;
                         }
                         else{
-                            speak("Ainsi qu'" + element.getName());
+                            if (talk)
+                                speak(", Ainsi qu'" + element.getFullName());
                         }
                         sayHowToInteract(element);
                     }
                 }
             }
-            elements.setText(element_names);
+            elements.setText(element_names.toString());
 
             if(modifyCURRENT_ACTION){
                 CURRENT_ACTION = getResources().getString(R.string.action_interact);
             }
         }
-        speak(R.string.mode_deplacement);
+        if (talk)
+            speak(R.string.mode_deplacement);
     }
 
     private void sayHowToInteract(GameEntity element){
@@ -230,7 +271,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             case "Building":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
-                        speak("pour visiter, faite un " + entry.getValue());
+                        speak(" pour visiter " + element.getNameWithPronoun() + ", faite un " + entry.getValue());
                     }
                 }
                 break;
@@ -277,58 +318,55 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
             if (entry.getValue().equals(action)){
                 entity = entry.getKey();
+                break;
             }
         }
 
-        // en fcontion du type de l'element, on intéragit d'une certaine façon
-        String type = entity.getClass().getSimpleName();
+        // en fonction du type de l'element, on intéragit d'une certaine façon
+        if (entity == null)
+            return;
+        String type = entity.getType();
 
         switch (type){
-            case "Building":
+            case "building":
+                // recupérer tout ce qu'il y a dans le building et passer le state à true
+                Construction building = (Construction) entity;
+                if(!building.isVisited()){
+
+                    int trousse_de_soins = 0;
+                    boolean item_found = false;
+                    for (Item item : building.getInventory()){
+                        if (rollTheDice("perception")) {
+                            item_found = true;
+                            if (item.getName().equals("trousse de soin"))
+                                trousse_de_soins++;
+                            else
+                                speak("Vous avez trouvé " + item.getFullName() + ".");
+                            hero.addToInventory(item);
+                        }
+                    }
+                    if (trousse_de_soins > 0)
+                        speak("Vous avez trouvé " + ((trousse_de_soins == 1) ? "une" : trousse_de_soins) + " trousse de soins.");
+                    if (!item_found)
+                        speak("Vous n'avez rien trouvé dans ce bâtiment.");
+                    building.setVisited(true);
+                }
+                else {
+                    speak(building.getNameWithPronoun() + " a déjà été visité.");
+                }
+                break;
+
+            case "vehicule":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
-                        // recupérer tout ce qu'il y a dans le building et passer le state à true
-                        if(!entity.isVisited()){
-                            Building building = (Building) entity;
-
-                            building.setInventory(new ArrayList<Item>()); // iventaire du building set à vide
-
-                            if(building.getInventory().size() == 0){
-                                speak(entity.getName() + " est vide");
-                            }
-                            else {
-                                for (Item item : building.getInventory()){
-                                    speak(entity.getName() + " ajoutée à l'inventaire.");
-                                    hero.addToInventory(item);
-                                }
-                            }
-                            entity.setVisited(true);
-                        }
-                        else {
-                            speak(entity.getName() + "déjà visité");
-                            continue;
+                        if(!this.hero.hasToolbox()){
+                            speak(R.string.cannot_use_car);
                         }
                     }
                 }
                 break;
 
-            case "Vehicule":
-                for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
-                    if(entity.equals(entry.getKey())){
-                        if(!entity.isVisited()){
-                            hero.addToInventory((Item) entity);
-                            speak(entity.getName() + " ajoutée à l'inventaire.");
-                            entity.setVisited(true);
-                        }
-                        else {
-                            speak(entity.getName() + "déjà visité");
-                            continue;
-                        }
-                    }
-                }
-                break;
-
-            case "Ennemy":
+            case "ennemy":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
@@ -337,13 +375,12 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         }
                         else {
                             speak("aucun monstre dans les parages");
-                            continue;
                         }
                     }
                 }
                 break;
 
-            case "Merchant":
+            case "merchant":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if (entity.equals(entry.getKey())) {
                         speak("Voyons ce qui nous intéresse");
@@ -351,7 +388,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         buyingMode(merchant);
                     }
                 }
-            case "NeutralChar":
+            case "neutralChar":
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
@@ -399,7 +436,28 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
 
-
+    private boolean rollTheDice(String aptitude){
+        Random r = new Random();
+        int skill;
+        switch (aptitude){
+            case "force":
+                skill = this.hero.getForce();
+                break;
+            case "perception":
+                skill = this.hero.getPerception();
+                break;
+            case "craft":
+                skill = this.hero.getCraft();
+                break;
+            case "connaissance":
+                skill = this.hero.getConnaissance();
+                break;
+            default:
+                return false;
+        }
+        int result = r.nextInt(20) + 1;
+        return (result <= skill);
+    }
 
 
 
@@ -420,46 +478,69 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     // the onSingleTapConfirmed is currently used for refreshing the position and describing the environnement again
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
+        if (!this.canDetectEvent) {
+            mTTS.stop();               /// Pour couper le dialogue avec un clic lors des tests
+            this.canDetectEvent = true;     /// idem
+            return false;
+        }
         verifyElementAround(true, true);
         return false;
     }
     @Override
     public boolean onDoubleTap(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
         return false;
     }
     @Override
     public boolean onDoubleTapEvent(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
         return false;
     }
     //not used
     @Override
     public boolean onDown(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
         return false;
     }
     //not used
     @Override
     public void onShowPress(MotionEvent e) {
+        //if (!this.canDetectEvent)
+            //return;
     }
     //not used
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return false;
         return false;
     }
     //not used
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        if (!this.canDetectEvent)
+            return false;
         return false;
     }
     @Override
     public void onLongPress(MotionEvent e) {
+        if (!this.canDetectEvent)
+            return;
         Toast.makeText(getApplicationContext(), "mode déplacement", Toast.LENGTH_SHORT).show();
         refreshDirection();
-        speak("Faites un fling dans une direction pour vous déplacer.");
         CURRENT_ACTION = getResources().getString(R.string.action_move);
-        speak(R.string.mode_interaction);
+        if ((hero.getPosition()[0] + hero.getPosition()[1]) == 0) {
+            speak("Faites un fling dans une direction pour vous déplacer.");
+            speak(R.string.mode_interaction);
+        }
     }
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        if (!this.canDetectEvent)
+            return false;
         boolean result = false;
         try {
             float diffY = e2.getY() - e1.getY();
@@ -493,7 +574,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 if(verifyMoveDirection("nord")){
                     hero.setYposition(hero.getPosition()[1] - 1);
                     describeDistrict();
-                    refreshDirection();
                 }
                 break;
 
@@ -510,7 +590,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 if(verifyMoveDirection("sud")){
                     hero.setYposition(hero.getPosition()[1] + 1);
                     describeDistrict();
-                    refreshDirection();
                 }
                 break;
 
@@ -527,7 +606,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 if(verifyMoveDirection("ouest")){
                     hero.setXposition(hero.getPosition()[0] - 1);
                     describeDistrict();
-                    refreshDirection();
                 }
                 break;
 
@@ -544,7 +622,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 if(verifyMoveDirection("est")){
                     hero.setXposition(hero.getPosition()[0] + 1);
                     describeDistrict();
-                    refreshDirection();
                 }
                 break;
 
@@ -557,6 +634,8 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
     private boolean verifyMoveDirection(String fling){
+        if (!this.canDetectEvent)
+            return false;
         boolean res = false;
 
         for (String direction : district.getPossibleDirection()){

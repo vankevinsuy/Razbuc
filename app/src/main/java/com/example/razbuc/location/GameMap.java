@@ -16,6 +16,8 @@ import com.example.razbuc.items.Toolbox;
 import com.example.razbuc.items.Vehicule;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.constructionType.Building;
+import com.example.razbuc.location.constructionType.Hospital;
+import com.example.razbuc.location.constructionType.PoliceStation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -83,7 +85,7 @@ public class GameMap {
                         switch (type){
 
                             case "building":
-                                d.addElements(new Building(name, districtPosition, type, null));
+                                d.addElements(new Building(districtPosition, type, null));
                                 break;
 
                             case "vehicule":
@@ -144,8 +146,10 @@ public class GameMap {
         });
     }
 
-    public void buildUserSavedMap(Context context){
 
+    private boolean ready = false;
+
+    public void buildUserSavedMap(Context context){
         razbucLocalDb = new RazbucLocalDb(context);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -227,7 +231,17 @@ public class GameMap {
 
                             switch (elementType){
                                 case "building":
-                                    d.addElements(new Building(elementName, districtPosition, elementType, inventory));
+                                    switch (elementName){
+                                        case (Hospital.CONSTRUCTION_TYPE):
+                                            d.addElements(new Hospital(districtPosition, elementType, inventory));
+                                            break;
+                                        case (PoliceStation.CONSTRUCTION_TYPE):
+                                            d.addElements(new PoliceStation(districtPosition, elementType, inventory));
+                                            break;
+                                        default:
+                                            d.addElements(new Building(districtPosition, elementType, inventory));
+                                            break;
+                                    }
                                     break;
 
                                 case "vehicule":
@@ -271,13 +285,10 @@ public class GameMap {
                 } else {
                     Log.d("rr", "Cached get failed: ", task.getException());
                 }
+                ready = true;
+
             }
         });
-        try {
-            Thread.sleep(100000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -307,5 +318,10 @@ public class GameMap {
         }
 
         return res;
+    }
+
+
+    public boolean isReady() {
+        return ready;
     }
 }

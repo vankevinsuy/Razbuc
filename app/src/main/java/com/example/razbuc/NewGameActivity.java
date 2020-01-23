@@ -48,12 +48,10 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                     if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("TTS", "Language not supported");
                     }
-
                     else
                     {
                         scenario();
                     }
-
                 }
                 else
                 {
@@ -174,7 +172,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                 speak(R.string.choose_hero);
 
                 currentStep = "describe_characters";
-                //speak(R.string.describe_characters);
+                speak(R.string.describe_characters);
                 currentStep = "select_hero";
                 selectedHero=0;
                 speak(heroList[selectedHero]);

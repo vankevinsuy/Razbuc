@@ -37,18 +37,16 @@
 
     <string name="map1">
         Vous sortez donc de l’hôtel dans lequel vous avez séjourné durant vos vacances.
-        Dehors il n’y a qu’une voiture elle a l’air solide vous vous dites qu’elle pourrait
-        facilement rouler sur les Razbucs. Vous pouvez faire une action de recherche pour
-        essayer de démarrer la voiture.
-        Une action de recherche s\'effectue avec une rotation de votre téléphone.
-        Vous pouvez également descendre la rue avec un fling bas ou aller vers la droite
-        avec un fling droit.
+        Dehors il n’y a qu’une voiture, elle a l’air solide. Vous vous dites qu’elle pourrait
+        facilement rouler sur les Razbucs. Vous pouvez essayer de démarrer la voiture
+        en effectuant un fling vers le haut.
+        Vous pouvez également descendre la rue ou aller vers la droite. Pour ce faire, effectuez un clic long
+        pour passer en mode déplacement.
     </string>
     <string name="map2">
-        Vous arrivez à l’Hôpital, vous vous dites qu’il y a certainement plus de Razbuc qu’autre part.
+        Vous arrivez à l’Hôpital, vous vous dites qu’il y a certainement pluss de Razbuc qu’autre part.
         Il sera certainement risqué d’entrer dedans mais vous avez besoin de trousse de soin pour survivre
-        durant votre voyage. Est ce que vous souhaitez fouiller ? Une action de fouille s\'effectue avec une
-        rotation du téléphone.
+        durant votre voyage. Pour le fouiller, faites un fling haut.
     </string>
     <string name="map4">
         Vous tombez nez à nez avec une Razbuc qui devait être séduisante de son vivant, elle commence
@@ -61,7 +59,6 @@
 
     <string name="cannot_use_car">
         La voiture n’a pas de clé et vous ne savez pas comment démarrer une voiture sans clé.
-        Vous pouvez descendre la rue avec un fling bas ou aller vers la droite avec un fling droit.
     </string>
 
 
@@ -99,6 +96,10 @@
     <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
     <string name="cancel_interaction">Pour refuser intéragir avec environnement et vous déplacer, faire un long press.</string>
     <string name="mode_deplacement">Faites un clic long pour passer en mode déplacement.</string>
-    <string name="mode_interaction">Faites un clic pour passer en mode intéraction.</string>
+    <string name="mode_interaction">Faites un clic pour repasser en mode intéraction.</string>
+    <string name="information">
+        Informations :
+        Vous pouvez à tout moment faire un clic sur l\'écran pour vous rappeler vos actions possibles.
+    </string>
 
 </resources>

@@ -50,6 +50,16 @@ public class District extends GameEntity {
         this.visited = visited;
     }
 
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
+
     public ArrayList<GameEntity> getElements() {
         return elements;
     }
@@ -60,5 +70,15 @@ public class District extends GameEntity {
 
     public void addElements(GameEntity elements) {
         this.elements.add(elements);
+    }
+
+    public boolean nothingToInteract(){
+        if (this.elements.isEmpty())
+            return true;
+        for (GameEntity entity : this.elements) {
+            if (!entity.isVisited())
+                return false;
+        }
+        return true;
     }
 }

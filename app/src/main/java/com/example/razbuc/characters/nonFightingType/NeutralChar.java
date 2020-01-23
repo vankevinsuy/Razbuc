@@ -15,4 +15,14 @@ public class NeutralChar extends NonFightingChar {
         super(name, inventory, position);
         System.out.println("Constructing a neutral character ...");
     }
+
+    @Override
+    public String getNameWithPronoun() {
+        return null;
+    }
+
+    @Override
+    public String getFullName() {
+        return null;
+    }
 }
