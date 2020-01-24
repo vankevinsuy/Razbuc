@@ -1,5 +1,7 @@
 package com.example.razbuc.location.constructionType;
 
+import com.example.razbuc.Enumerations.ConstructionType;
+import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.location.Construction;
 
@@ -9,12 +11,12 @@ public class Building extends Construction {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static String CONSTRUCTION_TYPE = "Batiment";
+    final static ConstructionType CONSTRUCTION_TYPE = ConstructionType.Batiment;
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
-    public Building(int[] position, String type, ArrayList<Item> inventory) {
-        super(CONSTRUCTION_TYPE, position, type, inventory);
+    public Building(int[] position, ElementType type, ArrayList<Item> inventory) {
+        super(CONSTRUCTION_TYPE.toString(), position, type, CONSTRUCTION_TYPE, inventory);
     }
 
     @Override

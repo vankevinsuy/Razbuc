@@ -1,10 +1,12 @@
 package com.example.razbuc.items;
 
+import com.example.razbuc.Enumerations.ItemType;
+
 public class Consumable extends Item {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static String ITEM_TYPE = "Consumable";
+    final static ItemType ITEM_TYPE = ItemType.Consumable;
     final static int CONSUMABLE_DURABILITY = 1;        // If durability not set, this.durability = 1
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor

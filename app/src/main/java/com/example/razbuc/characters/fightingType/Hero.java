@@ -3,7 +3,7 @@ package com.example.razbuc.characters.fightingType;
 import com.example.razbuc.characters.Character;
 import com.example.razbuc.characters.FightingChar;
 import com.example.razbuc.items.Item;
-import com.example.razbuc.items.Vehicule;
+import com.example.razbuc.location.Vehicule;
 import com.example.razbuc.items.Weapon;
 
 import java.util.ArrayList;
@@ -19,10 +19,6 @@ public class Hero extends FightingChar {
     private int real_movement;      // Basic movement + Vehicule movement
     private Vehicule vehicule;
     private ArrayList<Character> allies;
-    private String type;        // Possible types : Artificer, Explorer, Medic, SergeantMajor
-    private int perception;
-    private int craft;
-    private int connaissance;
 
     public boolean hasToolbox(){
         for (Item item : this.getInventory()){
@@ -42,10 +38,7 @@ public class Hero extends FightingChar {
                 int connaissance,
                 int force,
                 Weapon weapon) {
-        super(name, inventory, new int[] {0,0}, 20, 5, force, weapon);
-        this.perception = perception;
-        this.craft= craft;
-        this.connaissance= connaissance;
+        super(name, inventory, new int[] {0,0}, 20, 5, force, perception, craft, connaissance, weapon);
         this.basic_movement = BASIC_MOVEMENT;
     }
 
@@ -83,14 +76,6 @@ public class Hero extends FightingChar {
         this.real_movement = real_movement;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @Override
     public String getNameWithPronoun() {
         return null;
@@ -99,30 +84,6 @@ public class Hero extends FightingChar {
     @Override
     public String getFullName() {
         return null;
-    }
-
-    public int getPerception() {
-        return perception;
-    }
-
-    public void setPerception(int perception) {
-        this.perception = perception;
-    }
-
-    public int getCraft() {
-        return craft;
-    }
-
-    public void setCraft(int craft) {
-        this.craft = craft;
-    }
-
-    public int getConnaissance() {
-        return connaissance;
-    }
-
-    public void setConnaissance(int connaissance) {
-        this.connaissance = connaissance;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods

@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import com.example.razbuc.Enumerations.ElementType;
+import com.example.razbuc.characters.FightingChar;
 import com.example.razbuc.characters.NonFightingChar;
 import com.example.razbuc.characters.fightingType.Ennemy;
 import com.example.razbuc.characters.fightingType.Hero;
@@ -132,6 +134,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     this.hero=new SergeantMajor();
                     break;
             }
+            speak(R.string.story);
         }
         else{
             //récupération du héros via l'enregistrement dans la base qui n'est pas encore fait
@@ -165,26 +168,53 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
 
     private void describeDistrict(){
+        CURRENT_ACTION = getResources().getString(R.string.action_interact);
         District district = gameMap.getDistrictByPosition(hero.getPosition());
         if (district.isVisited())
             verifyElementAround(true, true);
         else{
-            switch(district.getId()){
-                case 1: speak(R.string.map1); break;
-                case 2: speak(R.string.map2); break;
-                //case 3: speak(R.string.map3); break;
-                case 4: speak(R.string.map4); break;
-                //case 5: speak(R.string.map5); break;
-                //case 6: speak(R.string.map6); break;
-                case 7: speak(R.string.map7); break;
-                //case 8: speak(R.string.map8); break;
-                //case 9: speak(R.string.map9); break;
-                default: speak("Texte non implémenté");
-            }
+            textByDistrict(district, false);
             district.setVisited(true);
+            verifyElementAround(false, false);
         }
-        CURRENT_ACTION = getResources().getString(R.string.action_interact);
-        verifyElementAround(false, false);
+    }
+    public void textByDistrict(District district, boolean victory){
+        switch(district.getId()){
+            case 1:
+                speak(R.string.map1);
+                break;
+            case 2:
+                speak(R.string.map2);
+                break;
+            case 3:
+                if (victory)
+                    speak(R.string.map3_victory);
+                else
+                    speak(R.string.map3);
+                break;
+            case 4:
+                if (victory)
+                    speak(R.string.map4_success);
+                else
+                    speak(R.string.map4);
+                break;
+            case 5:
+                speak(R.string.map5);
+                break;
+            case 6:
+                speak(R.string.map6);
+                break;
+            case 7:
+                speak(R.string.map7);
+                break;
+            case 8:
+                speak(R.string.map8);
+                break;
+            case 9:
+                speak(R.string.map9);
+                break;
+            default: speak("Texte non implémenté");
+        }
     }
 
     private void refreshDirection(){
@@ -239,17 +269,19 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 indexGesture = indexGesture + 1;
 
                 element_names.append(element.getName()).append("    ");
+                if (element.getType() == ElementType.Ennemy && !element.isVisited()){
+                    Ennemy ennemy = (Ennemy) element;
+                    combatMode(ennemy);
+                    ennemy.setVisited(true);
+                }
                 if(talk){
                     if(!element.isVisited()){
                         if (firstElement) {
-                            if (talk)
-                                speak("Autour de moi il y a " + element.getFullName());
+                            speak("Autour de moi il y a " + element.getFullName());
                             firstElement = false;
                         }
-                        else{
-                            if (talk)
-                                speak(", Ainsi qu'" + element.getFullName());
-                        }
+                        else
+                            speak(", Ainsi qu'" + element.getFullName());
                         sayHowToInteract(element);
                     }
                 }
@@ -265,10 +297,10 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
     private void sayHowToInteract(GameEntity element){
-        String type = element.getClass().getSimpleName();
+        ElementType type = element.getType();
 
         switch (type){
-            case "Building":
+            case Construction:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak(" pour visiter " + element.getNameWithPronoun() + ", faite un " + entry.getValue());
@@ -276,7 +308,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case "Vehicule":
+            case Vehicule:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("Pour essayer de la démarrer, faite un " + entry.getValue());
@@ -284,7 +316,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case "Ennemy":
+            case Ennemy:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour combattre, faite un " + entry.getValue());
@@ -292,17 +324,17 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case "Merchant":
+            case Merchant:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour echanger avec " + element.getName() + " faite un " + entry.getValue());
                     }
                 }
                 break;
-            case "NeutralChar":
+            case PNJ:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
-                        speak("pour parler avec " + element.getName() + " faite un " + entry.getValue());
+                        speak("Pour parler avec " + element.getName() + " faite un " + entry.getValue());
                     }
                 }
                 break;
@@ -325,10 +357,10 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         // en fonction du type de l'element, on intéragit d'une certaine façon
         if (entity == null)
             return;
-        String type = entity.getType();
+        ElementType type = entity.getType();
 
         switch (type){
-            case "building":
+            case Construction:
                 // recupérer tout ce qu'il y a dans le building et passer le state à true
                 Construction building = (Construction) entity;
                 if(!building.isVisited()){
@@ -336,7 +368,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     int trousse_de_soins = 0;
                     boolean item_found = false;
                     for (Item item : building.getInventory()){
-                        if (rollTheDice("perception")) {
+                        if (rollTheDice("perception", this.hero)) {
                             item_found = true;
                             if (item.getName().equals("trousse de soin"))
                                 trousse_de_soins++;
@@ -356,7 +388,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case "vehicule":
+            case Vehicule:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!this.hero.hasToolbox()){
@@ -366,21 +398,22 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case "ennemy":
+            case Ennemy:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
                             Ennemy ennemy = (Ennemy) entity;
                             combatMode(ennemy);
+                            ennemy.setVisited(true);
                         }
                         else {
-                            speak("aucun monstre dans les parages");
+                            speak("Il n'y a plus aucun monstre dans les parages");
                         }
                     }
                 }
                 break;
 
-            case "merchant":
+            case Merchant:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if (entity.equals(entry.getKey())) {
                         speak("Voyons ce qui nous intéresse");
@@ -388,7 +421,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         buyingMode(merchant);
                     }
                 }
-            case "neutralChar":
+            case PNJ:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(entity.equals(entry.getKey())){
                         if(!entity.isVisited()){
@@ -403,22 +436,84 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
     }
 
+    private Ennemy ennemy;
     private void combatMode(Ennemy ennemy) {
-        Hero hero = this.hero;
-
-        // Fight to the death
-        while (hero.getHealth_points() > 0 && ennemy.getHealth_points() > 0) {
-            // Hero attacks first
-            ennemy.loseHealth_points(hero.getReal_damages());
-            // Ennemy attacks second
-            hero.loseHealth_points(ennemy.getBasic_damages());
+        CURRENT_ACTION = getResources().getString(R.string.action_combat);
+        this.ennemy = ennemy;
+        speak("Un combat est lancé.");
+        if (ennemy.isInitiative()){
+            speak(R.string.initiative);
+            ennemyAttack();
         }
+        speak("Pour attaquer, double-cliquez.");
+    }
 
-        // Fight results
-        if (ennemy.getHealth_points() <= 0) {
-            speak("You won the fight");
-        } else {
-            speak ("You lose the fight");
+    Random r = new Random();
+    private void ennemyAttack(){
+        String[] ennemyAttack = getResources().getStringArray(R.array.ennemy_attack);
+        speak(ennemyAttack[r.nextInt(ennemyAttack.length)]);
+
+        boolean success = rollTheDice("force", this.ennemy);
+        if (success){
+            //String[] attack_success = getResources().getStringArray(R.array.ennemy_attack_success);
+            //speak(attack_success[r.nextInt(attack_success.length)]);
+            this.hero.loseHealth_points(this.ennemy.getReal_damages());
+            checkCombatStatus();
+            checkHeroHealth();
+        }
+        else{
+            String[] attack_failure = getResources().getStringArray(R.array.ennemy_attack_failure);
+            speak(attack_failure[r.nextInt(attack_failure.length)]);
+        }
+    }
+    private void heroAttack(){
+        String[] attack = getResources().getStringArray(R.array.attack);
+        speak(attack[r.nextInt(attack.length)]);
+
+        boolean success = rollTheDice("force", hero);
+        boolean end = false;
+        if (success){
+            this.ennemy.loseHealth_points(hero.getReal_damages());
+            end = checkCombatStatus();
+            if (end)
+                return;
+            String[] attack_success = getResources().getStringArray(R.array.attack_success);
+            speak(attack_success[r.nextInt(attack_success.length)]);
+        }
+        else{
+            String[] attack_failure = getResources().getStringArray(R.array.attack_failure);
+            speak(attack_failure[r.nextInt(attack_failure.length)]);
+        }
+        ennemyAttack();
+    }
+    public boolean checkCombatStatus(){
+        if (this.hero.getHealth_points() <= 0){
+            speak("Vous êtes mort.");
+            return true;
+        }
+        else if (this.ennemy.getHealth_points() <= 0){
+            textByDistrict(gameMap.getDistrictByPosition(hero.getPosition()), true);
+            CURRENT_ACTION = getResources().getString(R.string.action_interact);
+            return true;
+        }
+        return false;
+    }
+    public void checkHeroHealth(){
+        int health = hero.getHealth_points();
+        if (health == 20){
+            speak("Vous êtes en parfaite santé");
+        }
+        else if(health >= 15){
+            speak("Vous êtes un peu blessé.");
+        }
+        else if(health >= 10){
+            speak("Vous ne vous sentez pas très bien.");
+        }
+        else if (health >= 5){
+            speak("Vous êtes très blessé.");
+        }
+        else{
+            speak("Le prochain coup risque de vous être fatal.");
         }
     }
 
@@ -436,21 +531,21 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
 
-    private boolean rollTheDice(String aptitude){
+    private boolean rollTheDice(String aptitude, FightingChar character){
         Random r = new Random();
         int skill;
         switch (aptitude){
             case "force":
-                skill = this.hero.getForce();
+                skill = character.getForce();
                 break;
             case "perception":
-                skill = this.hero.getPerception();
+                skill = character.getPerception();
                 break;
             case "craft":
-                skill = this.hero.getCraft();
+                skill = character.getCraft();
                 break;
             case "connaissance":
-                skill = this.hero.getConnaissance();
+                skill = character.getConnaissance();
                 break;
             default:
                 return false;
@@ -490,6 +585,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     public boolean onDoubleTap(MotionEvent e) {
         if (!this.canDetectEvent)
             return false;
+        if (CURRENT_ACTION.equals("combat")){
+            heroAttack();
+        }
         return false;
     }
     @Override
@@ -529,12 +627,14 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     public void onLongPress(MotionEvent e) {
         if (!this.canDetectEvent)
             return;
-        Toast.makeText(getApplicationContext(), "mode déplacement", Toast.LENGTH_SHORT).show();
-        refreshDirection();
-        CURRENT_ACTION = getResources().getString(R.string.action_move);
-        if ((hero.getPosition()[0] + hero.getPosition()[1]) == 0) {
-            speak("Faites un fling dans une direction pour vous déplacer.");
-            speak(R.string.mode_interaction);
+        if (!CURRENT_ACTION.equals(getResources().getString(R.string.action_combat))) {
+            Toast.makeText(getApplicationContext(), "mode déplacement", Toast.LENGTH_SHORT).show();
+            refreshDirection();
+            CURRENT_ACTION = getResources().getString(R.string.action_move);
+            if ((hero.getPosition()[0] + hero.getPosition()[1]) == 0) {
+                speak("Faites un fling dans une direction pour vous déplacer.");
+                speak(R.string.mode_interaction);
+            }
         }
     }
     @Override

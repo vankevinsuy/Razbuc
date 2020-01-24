@@ -1,10 +1,12 @@
 package com.example.razbuc.items;
 
+import com.example.razbuc.Enumerations.ItemType;
+
 public class PaperMap extends Item {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static String ITEM_TYPE = "Paper map";
+    final static ItemType ITEM_TYPE = ItemType.PaperMap;
     final static int CONSUMABLE_DURABILITY = 99;      // If durability not set, this.durability = 99
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor

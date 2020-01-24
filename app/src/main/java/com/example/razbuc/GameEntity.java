@@ -1,10 +1,12 @@
 package com.example.razbuc;
 
+import com.example.razbuc.Enumerations.ElementType;
+
 public abstract class GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    private String type;
+    private ElementType type;
     private String name;
     private String description;
     private int[] position = new int[2];
@@ -49,11 +51,11 @@ public abstract class GameEntity {
         this.state = state;
     }
 
-    public String getType() {
+    public ElementType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(ElementType type) {
         this.type = type;
     }
 

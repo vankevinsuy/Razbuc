@@ -15,6 +15,9 @@ public abstract class FightingChar extends Character {
     private int real_damages;       // Basic_damages + Weapon damage
     private Weapon weapon;
     private int force;
+    private int perception;
+    private int craft;
+    private int connaissance;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
@@ -24,10 +27,16 @@ public abstract class FightingChar extends Character {
                         int health_points,
                         int basic_damages,
                         int force,
+                        int perception,
+                        int craft,
+                        int connaissance,
                         Weapon weapon) {
         super(name, inventory, position);
         System.out.println("Constructing a fighting character ...");
         this.force=force;
+        this.perception = perception;
+        this.craft = craft;
+        this.connaissance = connaissance;
         this.health_points = health_points;
         this.basic_damages = basic_damages;
         this.weapon = weapon;
@@ -76,6 +85,29 @@ public abstract class FightingChar extends Character {
         this.force = force;
     }
 
+    public int getPerception() {
+        return perception;
+    }
+
+    public void setPerception(int perception) {
+        this.perception = perception;
+    }
+
+    public int getCraft() {
+        return craft;
+    }
+
+    public void setCraft(int craft) {
+        this.craft = craft;
+    }
+
+    public int getConnaissance() {
+        return connaissance;
+    }
+
+    public void setConnaissance(int connaissance) {
+        this.connaissance = connaissance;
+    }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
 
     public void gainHealth_points(int value) {

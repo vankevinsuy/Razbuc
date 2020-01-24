@@ -1,5 +1,6 @@
 package com.example.razbuc.characters.nonFightingType;
 
+import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.characters.NonFightingChar;
 import com.example.razbuc.items.Item;
 
@@ -14,6 +15,7 @@ public class NeutralChar extends NonFightingChar {
                        int[] position) {
         super(name, inventory, position);
         System.out.println("Constructing a neutral character ...");
+        this.setType(ElementType.PNJ);
     }
 
     @Override

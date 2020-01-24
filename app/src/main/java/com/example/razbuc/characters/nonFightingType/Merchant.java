@@ -1,5 +1,6 @@
 package com.example.razbuc.characters.nonFightingType;
 
+import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.characters.NonFightingChar;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
@@ -19,6 +20,7 @@ public class Merchant extends NonFightingChar {
         int[] fakeValue = new int[1];
         fakeValue[0] = 1;
         this.addToInventory(new Weapon("Kitchen knife", fakeValue, 10, this.getPosition()));        // By default, every merchant sells a basic weapon
+        this.setType(ElementType.Merchant);
     }
 
 

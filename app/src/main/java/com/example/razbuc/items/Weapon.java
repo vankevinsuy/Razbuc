@@ -1,10 +1,12 @@
 package com.example.razbuc.items;
 
+import com.example.razbuc.Enumerations.ItemType;
+
 public class Weapon extends Item {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static String ITEM_TYPE = "Weapon";
+    final static ItemType ITEM_TYPE = ItemType.Weapon;
     final static int WEAPON_DURABILITY = 10;        // If durability not set, this.durability = 10
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor

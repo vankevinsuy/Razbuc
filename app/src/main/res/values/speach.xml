@@ -48,13 +48,52 @@
         Il sera certainement risqué d’entrer dedans mais vous avez besoin de trousse de soin pour survivre
         durant votre voyage. Pour le fouiller, faites un fling haut.
     </string>
+    <string name="map3">
+        Vous tombez nez à nez avec un Razbuc habillé en pikachu.
+        Un conseil n’essayez pas d’attraper ce pokémon.
+    </string>
+    <string name="map3_victory">
+        Vous avez réussi à survivre à ce combat acharné.
+        Vous remarquer un peu plus long un office du tourisme,
+        vous pouvez effectuer un fling haut pour le fouiller.
+    </string>
     <string name="map4">
-        Vous tombez nez à nez avec une Razbuc qui devait être séduisante de son vivant, elle commence
-        à courir vers vous la bave aux lèvres.
+        Vous tombez nez à nez avec une Razbuc qui devait être séduisante de son vivant.
+        Elle commence à courir vers vous la bave aux lèvres.
+    </string>
+    <string name="map4_success">
+        Vous sortez victorieux de ce combat de titans.
+        Vous remarquez un jeune homme caché derrière une pancarte,
+        vous pouvez lire sur la pancarte :
+        \"Grève générale des agents de la Société nationale des chemins de fer en colère\".
+        Le monsieur s\'approche de vous et vous dis : \"Désolé, veuillez repporter votre voyage,
+        les agents de la S N C F E C, sont en grève\".
+    </string>
+    <string name="map5">
+        Vous ne savez pas où mettre vos pieds tant il y a de sha partout dans cette rue.
+        Au milieu de ces sha se trouve une vieille dame leur balançant des croquettes.
+        Vous pouvez parler à la vieille dame en faisant un fling haut.
+    </string>
+    <string name="map6">
+        Vous arrivez à la place du marché.
+        Un marchand vous accoste, il vous dit qu’il a exactement ce que vous cherchez.
+        Pour marchander avec lui, faites un fling haut.
     </string>
     <string name="map7">
-        Vous arrivez au poste de police. Vous trouverez peut-être une arme ici. Voulez-vous effectuer
-        une action de fouille ?
+        Vous arrivez au poste de police. Vous trouverez peut-être une arme ici.
+        Vous pouvez le fouiller avec un fling haut.
+        Vous pouvez également remonter la rue ou aller vers la droite.
+    </string>
+    <string name="map8">
+        Vous arrivez à un garage. Deux Razbucs se font un casse-dalle avec un garagiste.
+        Si vous vous approchez davantage vous ne pourrez pas les éviter.
+        Faites un fling haut pour combattre les Razbucs et fouiller le garage.
+    </string>
+    <string name="map9">
+        Vous arrivez à la sortie de la ville.
+        Un mur a été érigé à cette endroit empêchant toutes sorties.
+        Vous pouvez y lire \"Make America Great Again\".
+        Vous pensez qu\'une grosse voiture pourrait détruire ce mur.
     </string>
 
     <string name="cannot_use_car">
@@ -93,6 +132,35 @@
     </string-array>
 
 
+    <string-array name="attack">
+        <item>Vous tentez un crochet du gauche.</item>
+        <item>Vous tentez un coup de pieds dans les parties, cela lui sera peut-être fatal.</item>
+    </string-array>
+    <string-array name="attack_with_weapon">
+        <item>Vous tentez un tir dans la tête, c\'est toujours efficace dans les films.</item>
+    </string-array>
+    <string-array name="ennemy_attack">
+        <item>Le razbuc essaye de vous donner une grosse baffe.</item>
+        <item>Le razbuc vous donne un coup de tête en vous fonçant dedans.</item>
+    </string-array>
+    <string-array name="attack_success">
+        <item>Cette attaque a été très efficace.</item>
+        <item>Le Razbuc à l\'air mal en point.</item>
+    </string-array>
+    <string-array name="attack_failure">
+        <item>Mais c\’est quoi cette pichenette.</item>
+        <item>L\’attaque l\’a fait à peine bouger.</item>
+    </string-array>
+    <string-array name="ennemy_attack_success">
+        <item>Son attaque vous blesse.</item>
+        <item>Cette attaque vous laissera peut-être une cicatrice.</item>
+    </string-array>
+    <string-array name="ennemy_attack_failure">
+        <item>Son attaque était prévisible, vous avez pu l\'esquiver sans problème.</item>
+        <item>Vous avez fait une esquive à la Matrix.</item>
+    </string-array>
+
+
     <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
     <string name="cancel_interaction">Pour refuser intéragir avec environnement et vous déplacer, faire un long press.</string>
     <string name="mode_deplacement">Faites un clic long pour passer en mode déplacement.</string>
@@ -100,6 +168,9 @@
     <string name="information">
         Informations :
         Vous pouvez à tout moment faire un clic sur l\'écran pour vous rappeler vos actions possibles.
+    </string>
+    <string name="initiative">
+        Vous n\'avez pas eu le temps de vous préparer à l\'attaque.
     </string>
 
 </resources>

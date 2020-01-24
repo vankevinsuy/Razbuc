@@ -5,6 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.razbuc.Enumerations.ConstructionType;
+import com.example.razbuc.Enumerations.ElementType;
+import com.example.razbuc.Enumerations.ItemType;
 import com.example.razbuc.LocalDatabase.RazbucLocalDb;
 import com.example.razbuc.characters.fightingType.Ennemy;
 import com.example.razbuc.characters.nonFightingType.Merchant;
@@ -13,7 +16,6 @@ import com.example.razbuc.items.Consumable;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.items.PaperMap;
 import com.example.razbuc.items.Toolbox;
-import com.example.razbuc.items.Vehicule;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.constructionType.Building;
 import com.example.razbuc.location.constructionType.Hospital;
@@ -85,13 +87,11 @@ public class GameMap {
                         switch (type){
 
                             case "building":
-                                d.addElements(new Building(districtPosition, type, null));
+                                d.addElements(new Building(districtPosition, ElementType.Construction, null));
                                 break;
 
                             case "vehicule":
-                                int[] fakeValue = new int[1];
-                                fakeValue[0] = 1;
-                                d.addElements(new Vehicule(name, fakeValue, districtPosition));
+                                d.addElements(new Vehicule(name, districtPosition));
                                 break;
 
                             case "Ennemy":
@@ -106,7 +106,7 @@ public class GameMap {
                                     damage = rand.nextInt(4);
                                 }
 
-                                d.addElements(new Ennemy(name, districtPosition, hp, damage, 12, null));
+                                d.addElements(new Ennemy(name, districtPosition, hp, damage, 12, null, false));
                                 break;
 
                             case "PNJ":
@@ -153,7 +153,8 @@ public class GameMap {
         razbucLocalDb = new RazbucLocalDb(context);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userData = db.collection("users").document(razbucLocalDb.getUserId());
+        String id = razbucLocalDb.getUserId();
+        DocumentReference userData = db.collection("users").document(id);
 
         userData.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -211,17 +212,17 @@ public class GameMap {
                             if (items != null)
                             {
                                 for (String s : items){
-                                    switch (s){
-                                        case "trousse de soin":
+                                    switch (ItemType.fromString(s)){
+                                        case Consumable:
                                             inventory.add(new Consumable(s, value, 1, districtPosition));
                                             break;
-                                        case "pistolet":
+                                        case Weapon:
                                             inventory.add(new Weapon(s, value, 2, districtPosition));
                                             break;
-                                        case "boite à outils":
+                                        case Toolbox:
                                             inventory.add(new Toolbox(s, value, 1, districtPosition));
                                             break;
-                                        case "carte":
+                                        case PaperMap:
                                             inventory.add(new PaperMap(s, value, 1, districtPosition));
                                             break;
                                     }
@@ -229,43 +230,46 @@ public class GameMap {
                             }
 
 
-                            switch (elementType){
-                                case "building":
-                                    switch (elementName){
-                                        case (Hospital.CONSTRUCTION_TYPE):
-                                            d.addElements(new Hospital(districtPosition, elementType, inventory));
+                            switch (ElementType.fromString(elementType)){
+                                case Construction:
+                                    switch (ConstructionType.fromString(elementName)){
+                                        case Hopital:
+                                            d.addElements(new Hospital(districtPosition, ElementType.Construction, inventory));
                                             break;
-                                        case (PoliceStation.CONSTRUCTION_TYPE):
-                                            d.addElements(new PoliceStation(districtPosition, elementType, inventory));
+                                        case Poste_de_police:
+                                            d.addElements(new PoliceStation(districtPosition, ElementType.Construction, inventory));
                                             break;
                                         default:
-                                            d.addElements(new Building(districtPosition, elementType, inventory));
+                                            d.addElements(new Building(districtPosition, ElementType.Construction, inventory));
                                             break;
                                     }
                                     break;
 
-                                case "vehicule":
-                                    int[] fakeValue = new int[1];
-                                    fakeValue[0] = 1;
-                                    d.addElements(new Vehicule(elementName, fakeValue, districtPosition));
+                                case Vehicule:
+                                    d.addElements(new Vehicule(elementName, districtPosition));
                                     break;
 
-                                case "Ennemy":
-                                    Random rand = new Random();
-                                    int hp = rand.nextInt(20);
-                                    int damage = 0;
+                                case Ennemy:
+                                    int hp;
+                                    int damage;
+                                    int force;
+                                    boolean initiative = (element.get("initiative") != null) && (boolean) element.get("initiative");
 
                                     if(elementName.equals("Mamie")){
-                                        damage = rand.nextInt(6);
+                                        damage = 4;
+                                        hp = 20;
+                                        force = 12;
                                     }
                                     else {
-                                        damage = rand.nextInt(4);
+                                        damage = 2;
+                                        hp = 15;
+                                        force = 10;
                                     }
 
-                                    d.addElements(new Ennemy(elementName, districtPosition, hp, damage, 12, null));
+                                    d.addElements(new Ennemy(elementName, districtPosition, hp, damage, force, null, initiative));
                                     break;
 
-                                case "PNJ":
+                                case PNJ:
                                     switch (elementName){
                                         case "Marchands":
                                             d.addElements(new Merchant(elementName, new ArrayList<Item>(), districtPosition));

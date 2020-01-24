@@ -4,6 +4,7 @@
     <string name="Firestore_add_new_user">https://us-central1-razbuc-6425f.cloudfunctions.net/start?id=</string>
     <string name="action_move">move</string>
     <string name="action_interact">interaction</string>
+    <string name="action_combat">combat</string>
 
     <string-array name="gestures_for_interaction">
         <item>Fling haut</item>

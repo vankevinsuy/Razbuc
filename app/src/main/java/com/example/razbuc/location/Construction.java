@@ -1,5 +1,7 @@
 package com.example.razbuc.location;
 
+import com.example.razbuc.Enumerations.ConstructionType;
+import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.GameEntity;
 import com.example.razbuc.items.Item;
 
@@ -10,15 +12,18 @@ public class Construction extends GameEntity {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
     private ArrayList<Item> inventory;
+    private ConstructionType constructionType;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     public Construction(String name,
                         int[] position,
-                        String type,
+                        ElementType type,
+                        ConstructionType constructionType,
                         ArrayList<Item> inventory) {
         this.setType(type);
         this.inventory = inventory;
+        this.constructionType = constructionType;
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters

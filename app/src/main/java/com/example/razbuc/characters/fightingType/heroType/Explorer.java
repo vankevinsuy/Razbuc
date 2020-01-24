@@ -15,6 +15,5 @@ public class Explorer extends Hero {
 
     public Explorer() {
         super(HERO_TYPE, Arrays.asList(new Item[] { new PaperMap("Carte",new int[] {0},new int[] {-1,-1}) }), 16,12,12,12,null);
-        setType(HERO_TYPE);
     }
 }
