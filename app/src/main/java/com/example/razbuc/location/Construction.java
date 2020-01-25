@@ -45,4 +45,12 @@ public class Construction extends GameEntity {
     public String getNameWithPronoun() {
         return "";
     }
+
+    public ConstructionType getConstructionType() {
+        return constructionType;
+    }
+
+    public void setConstructionType(ConstructionType constructionType) {
+        this.constructionType = constructionType;
+    }
 }

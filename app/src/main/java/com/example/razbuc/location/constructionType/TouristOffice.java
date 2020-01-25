@@ -7,25 +7,25 @@ import com.example.razbuc.location.Construction;
 
 import java.util.ArrayList;
 
-public class Building extends Construction {
+public class TouristOffice extends Construction {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
 
-    final static ConstructionType CONSTRUCTION_TYPE = ConstructionType.Batiment;
+    final static ConstructionType CONSTRUCTION_TYPE = ConstructionType.Office_du_tourisme;
 
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
-    public Building(int[] position, ElementType type, ArrayList<Item> inventory) {
+    public TouristOffice(int[] position, ElementType type, ArrayList<Item> inventory) {
         super(CONSTRUCTION_TYPE.toString(), position, type, CONSTRUCTION_TYPE, inventory);
     }
 
     @Override
     public String getFullName(){
-        return "Un batimant";
+        return "Un office du tourisme";
     }
 
     @Override
     public String getNameWithPronoun() {
-        return "Le batimant";
+        return "L'office du tourisme";
     }
 }

@@ -9,25 +9,17 @@ public class Weapon extends Item {
     final static ItemType ITEM_TYPE = ItemType.Weapon;
     final static int WEAPON_DURABILITY = 10;        // If durability not set, this.durability = 10
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
+    private int damage;
 
-    // Weapon creation with custom durability
-    public Weapon(String name,
-                  int[] value,        // Weapon damage
-                  int durability,
-                  int[] position) {
-        super(name, value, ITEM_TYPE, durability, position);
-        System.out.println("Constructing a weapon ...");
-        setPrice(this.getValue()[0] * 2);         // By default, this.price = this.value*2 for every weapon
-    }
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
     // Weapon creation with default durability
     public Weapon(String name,
-                  int[] value,
+                  int damage,
                   int[] position) {
-        super(name, value, ITEM_TYPE, WEAPON_DURABILITY, position);
+        super(name, new int[]{0}, ITEM_TYPE, WEAPON_DURABILITY, position);
         System.out.println("Constructing a weapon ...");
-        setPrice(this.getValue()[0] * 2);         // By default, this.price = this.value*2 for every weapon
+        this.damage = damage;
     }
 
     @Override
@@ -38,5 +30,13 @@ public class Weapon extends Item {
     @Override
     public String getFullName() {
         return "Une arme";
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 }

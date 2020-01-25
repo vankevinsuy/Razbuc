@@ -28,12 +28,12 @@ public class Ennemy extends FightingChar {
 
     @Override
     public String getNameWithPronoun() {
-        return null;
+        return "Le razbuc";
     }
 
     @Override
     public String getFullName() {
-        return null;
+        return "Un razbuc";
     }
 
     public boolean isInitiative() {

@@ -3,7 +3,7 @@ package com.example.razbuc.Enumerations;
 public enum ItemType {
     Consumable ("Trousse de soins"),
     PaperMap ("Carte"),
-    Toolbox ("Boite à outil"),
+    Toolbox ("Boite à outils"),
     Weapon ("Pistolet"),
     Misc ("Misc");
 

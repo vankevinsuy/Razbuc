@@ -18,8 +18,11 @@ import com.example.razbuc.items.PaperMap;
 import com.example.razbuc.items.Toolbox;
 import com.example.razbuc.items.Weapon;
 import com.example.razbuc.location.constructionType.Building;
+import com.example.razbuc.location.constructionType.Garage;
 import com.example.razbuc.location.constructionType.Hospital;
 import com.example.razbuc.location.constructionType.PoliceStation;
+import com.example.razbuc.location.constructionType.TouristOffice;
+import com.example.razbuc.location.constructionType.Wall;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -217,7 +220,7 @@ public class GameMap {
                                             inventory.add(new Consumable(s, value, 1, districtPosition));
                                             break;
                                         case Weapon:
-                                            inventory.add(new Weapon(s, value, 2, districtPosition));
+                                            inventory.add(new Weapon(s, 3, districtPosition));
                                             break;
                                         case Toolbox:
                                             inventory.add(new Toolbox(s, value, 1, districtPosition));
@@ -238,6 +241,15 @@ public class GameMap {
                                             break;
                                         case Poste_de_police:
                                             d.addElements(new PoliceStation(districtPosition, ElementType.Construction, inventory));
+                                            break;
+                                        case Garage:
+                                            d.addElements(new Garage(districtPosition, ElementType.Construction, inventory));
+                                            break;
+                                        case Office_du_tourisme:
+                                            d.addElements(new TouristOffice(districtPosition, ElementType.Construction, inventory));
+                                            break;
+                                        case Mur:
+                                            d.addElements(new Wall(districtPosition, ElementType.Construction));
                                             break;
                                         default:
                                             d.addElements(new Building(districtPosition, ElementType.Construction, inventory));

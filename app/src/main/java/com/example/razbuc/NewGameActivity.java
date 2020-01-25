@@ -145,9 +145,6 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-        if (!this.canDetectEvent)
-            return false;
-
         if (this.mDetector.onTouchEvent(event)) {
             return true;
         }

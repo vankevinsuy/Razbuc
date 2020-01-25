@@ -49,12 +49,12 @@
         durant votre voyage. Pour le fouiller, faites un fling haut.
     </string>
     <string name="map3">
-        Vous tombez nez à nez avec un Razbuc habillé en pikachu.
-        Un conseil n’essayez pas d’attraper ce pokémon.
+        Vous tombez nez à nez avec un Razbuc habillé en pikatchu.
+        Un conseil n’essayez pas d’attraper ce pokémone.
     </string>
     <string name="map3_victory">
         Vous avez réussi à survivre à ce combat acharné.
-        Vous remarquer un peu plus long un office du tourisme,
+        Vous remarquer un peu plus loin un office du tourisme,
         vous pouvez effectuer un fling haut pour le fouiller.
     </string>
     <string name="map4">
@@ -85,43 +85,92 @@
         Vous pouvez également remonter la rue ou aller vers la droite.
     </string>
     <string name="map8">
-        Vous arrivez à un garage. Deux Razbucs se font un casse-dalle avec un garagiste.
-        Si vous vous approchez davantage vous ne pourrez pas les éviter.
-        Faites un fling haut pour combattre les Razbucs et fouiller le garage.
+        Vous arrivez à un garage. Un Razbucs se fait un casse-dalle avec un garagiste.
+        Si vous vous approchez davantage vous ne pourrez pas l\'éviter.
+        Faites un fling haut pour combattre le Razbuc et fouiller le garage.
     </string>
     <string name="map9">
         Vous arrivez à la sortie de la ville.
         Un mur a été érigé à cette endroit empêchant toutes sorties.
-        Vous pouvez y lire \"Make America Great Again\".
+        Vous pouvez y lire : \"Maike América Graite egaine\".
         Vous pensez qu\'une grosse voiture pourrait détruire ce mur.
+    </string>
+    <string name="map9_success">
+        La grand mère abandonne, et part en courant en serrant fort son sac contre elle.
+        Vous retournez tranquillement dans la voiture, mais vous vous rendez compte que vos poche pèsent moins lourd.
+        Durant le combat, la grand mère vous a tout pris,
+        vous comprenez donc pourquoi elle serrait son sac si fort contre elle.
+    </string>
+
+    <string name="end">
+        Malgrès tout, vous avez enfin quitté Paris.
+        Vous pouvez faire la route jusqu\'à Rennes, enfin si la voiture vous le permet.
+        La suite dans une provhaine aventure.
+    </string>
+
+    <string name="game_finished">
+        La partie est terminée.
+        Pour recommencer, double-cliquez.
     </string>
 
     <string name="cannot_use_car">
         La voiture n’a pas de clé et vous ne savez pas comment démarrer une voiture sans clé.
     </string>
-
-
-
-    <string name="victory_map4">
-        Vous avez survécu à ce combat difficile. “Vous pouvez à présent descendre la rue,
-        monter la rue ou aller vers la droite.
+    <string name="use_car">
+        La grand mère utilise la boite à outil pour démarer la voiture.
+        Vous vous mettez au volant et commencez à la conduire.
+    </string>
+    <string name="crush_ennemy">
+        Comme vous l\'aviez prévu, la voiture roule correctement sur les razbucs.
+    </string>
+    
+    
+    <string name="mamie_1">
+        La grand mère vous sourit gentiment, et vous demande si vous aimez les sha.
+        Faites un fling droit pour répondre : \"Oui je les adore\",
+        ou un fling gauche pour répondre : \"Non, ce sont de sales bestioles\".
+    </string>
+    <string name="mamie_wrong_answer">
+        Tu es un sale garnement, disparait de ma vue !
+    </string>
+    <string name="mamie_2">
+        je vois mon petit, tu es un gentil peutio. Est ce que tu as besoin de quelque chose ?
+        Faites un Fling droit pour dire que vous n’avez pas besoin d’une vieille grand mère,
+        ou un Fling gauche pour demander une recette de grand mère pour démarer une voiture.
+    </string>
+    <string name="mamie_3">
+        Oui je sais comment faire ça. Est ce que tu aurais une boîte à outils par hasard ?
+    </string>
+    <string name="mamie_3_oui">
+        Vous répondez que vous en avez effectivement une.
+        La mamie vous répond alors : D\'accord, accompagne moi à la voiture et je la démarerais.
+        La mamie vous suit.
+    </string>
+    <string name="mamie_3_non">
+        Vous répondez que vous n\'en avez pas.
+        La mamie vous demande donc d\'en trouver une.
     </string>
 
-    <string name="search_map2_1">
-        Vous avez trouvé...
+    <string name="mamie_mechante">
+        Vous sortez de la ville en voiture.
+        La mamie vous demande alors de vous arreter et de sortir de la voiture.
+        Vous ne comprenez pas, mais vous faites ce qu\'elle vous demande.
+        La mamie braque son sac à main sur vous, et vous dit :
+        \"C\'était bien sympa mon petit, mais maintenant tu vas me donner tout ce que tu a.\"
     </string>
 
-    <string name="search_map2_2">
-        trousses de soin.Vous pouvez à présent descendre la rue, aller ver la droite ou vers la gauche
+
+
+    <string name="marchand">
+        Bonjour l\'ami, j\'ai deux ou trois bricoles qui devrait tintéresser.
+        Un révolver pour trois trousses de soins, une carte pour une trousses de soins,
+        ou une boite à outil pour deux trousses de soins.
+    </string>
+    <string name="marchand_interaction">
+        Vous pouvez faire défiler les objets avec un fling droit ou gauche,
+        acheter en double-cliquant, et enfin quitter avec un fling vers le haut.
     </string>
 
-    <string name="search_map7_1" >
-        Vous avez trouvé...
-    </string>
-
-    <string name="map7_2">
-        pistolet. Vous pouvez à présent remonter la rue ou aller vers la droite.
-    </string>
 
 
     <string-array name="list_hero_type">
@@ -143,9 +192,13 @@
         <item>Le razbuc essaye de vous donner une grosse baffe.</item>
         <item>Le razbuc vous donne un coup de tête en vous fonçant dedans.</item>
     </string-array>
+    <string-array name="granny_attack">
+        <item>La mamie vous frappe avec son sac</item>
+        <item>La mamie sors un sha de son sac et vous le balance.</item>
+    </string-array>
     <string-array name="attack_success">
         <item>Cette attaque a été très efficace.</item>
-        <item>Le Razbuc à l\'air mal en point.</item>
+        <item>L\'ennemie à l\'air mal en point.</item>
     </string-array>
     <string-array name="attack_failure">
         <item>Mais c\’est quoi cette pichenette.</item>
@@ -161,6 +214,7 @@
     </string-array>
 
 
+    <string name="rien"></string>
     <string name="resume_game">Vous allez reprendre la partie. Faites un simple clique pour jouer.</string>
     <string name="cancel_interaction">Pour refuser intéragir avec environnement et vous déplacer, faire un long press.</string>
     <string name="mode_deplacement">Faites un clic long pour passer en mode déplacement.</string>
@@ -171,6 +225,9 @@
     </string>
     <string name="initiative">
         Vous n\'avez pas eu le temps de vous préparer à l\'attaque.
+    </string>
+    <string name="dialog_ended">
+        La conversation est terminée.
     </string>
 
 </resources>

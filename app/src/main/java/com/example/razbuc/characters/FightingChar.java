@@ -40,7 +40,6 @@ public abstract class FightingChar extends Character {
         this.health_points = health_points;
         this.basic_damages = basic_damages;
         this.weapon = weapon;
-        this.computeReal_damages();
     }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
@@ -61,13 +60,6 @@ public abstract class FightingChar extends Character {
         this.basic_damages = damages;
     }
 
-    public int getReal_damages() {
-        return real_damages;
-    }
-
-    public void setReal_damages(int real_damages) {
-        this.real_damages = real_damages;
-    }
 
     public Weapon getWeapon() {
         return weapon;
@@ -123,12 +115,17 @@ public abstract class FightingChar extends Character {
         }
     }
 
-    public void computeReal_damages() {
+
+    public int getReal_damages() {
         if (this.weapon == null) {
-            setReal_damages(this.basic_damages);
+            return this.basic_damages;
         } else {
-            setReal_damages(this.basic_damages + this.weapon.getValue()[0]);
+            return this.basic_damages + this.weapon.getDamage();
         }
+    }
+
+    public boolean hasWeapon(){
+        return this.weapon != null;
     }
 
 }

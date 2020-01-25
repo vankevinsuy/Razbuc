@@ -1,5 +1,7 @@
 package com.example.razbuc.characters.fightingType;
 
+import com.example.razbuc.Enumerations.ElementType;
+import com.example.razbuc.Enumerations.ItemType;
 import com.example.razbuc.characters.Character;
 import com.example.razbuc.characters.FightingChar;
 import com.example.razbuc.items.Item;
@@ -18,14 +20,34 @@ public class Hero extends FightingChar {
     private int basic_movement;
     private int real_movement;      // Basic movement + Vehicule movement
     private Vehicule vehicule;
-    private ArrayList<Character> allies;
+    private ArrayList<Character> allies = new ArrayList<>();
 
     public boolean hasToolbox(){
         for (Item item : this.getInventory()){
-            if (item.getType().equals("Toolbox"))
+            if (item.getItemType() == ItemType.Toolbox)
                 return true;
         }
         return false;
+    }
+
+    public boolean hasPaperMap(){
+        for (Item item : this.getInventory()){
+            if (item.getItemType() == ItemType.PaperMap)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasMamie(){
+        for (Character ally : this.allies){
+            if (ally.getType() == ElementType.PNJ)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean hasVehicule(){
+        return (vehicule != null);
     }
 
 
@@ -103,6 +125,40 @@ public class Hero extends FightingChar {
 //            setReal_movement(this.basic_movement + this.vehicule.getValue());
 //        }
 //    }
+
+    public boolean hasCareKit(){
+        for (Item item : this.getInventory()){
+            if (item.getItemType() == ItemType.Consumable)
+                return true;
+        }
+        return false;
+    }
+
+    public void useCareKit(){
+        removeCareKit(1);
+        this.gainHealth_points(5);
+    }
+
+    public void removeCareKit(int number){
+        for (int k = 0; k < number; k++) {
+            for (Item item : this.getInventory()) {
+                if (item.getItemType() == ItemType.Consumable) {
+                    this.getInventory().remove(item);
+                    break;
+                }
+            }
+        }
+    }
+
+    public int getNumberOfCareKit(){
+        int count = 0;
+        for (Item item : this.getInventory()){
+            if (item.getItemType() == ItemType.Consumable) {
+                count++;
+            }
+        }
+        return count;
+    }
 
 
 }

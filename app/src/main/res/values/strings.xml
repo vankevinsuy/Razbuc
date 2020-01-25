@@ -5,6 +5,9 @@
     <string name="action_move">move</string>
     <string name="action_interact">interaction</string>
     <string name="action_combat">combat</string>
+    <string name="action_dialogue">dialogue</string>
+    <string name="action_commercer">commerce</string>
+    <string name="action_end">end</string>
 
     <string-array name="gestures_for_interaction">
         <item>Fling haut</item>

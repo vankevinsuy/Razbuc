@@ -3,7 +3,10 @@ package com.example.razbuc.Enumerations;
 public enum ConstructionType { // Correspond au nom des construction dans la bdd
     Batiment ("Batiment"),
     Hopital ("Hopital"),
-    Poste_de_police ("Poste de police");
+    Poste_de_police ("Poste de police"),
+    Garage ("Garage"),
+    Office_du_tourisme ("Office du tourisme"),
+    Mur ("Mur");
 
 
     private String name = "";

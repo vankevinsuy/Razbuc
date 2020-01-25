@@ -9,7 +9,6 @@ public abstract class Item extends com.example.razbuc.GameEntity {
 
     private int[] value;
     private int durability;
-    private int price;          // By default, this.price = this.value for every item
     private int quantity;
     private ItemType itemType;
 
@@ -27,7 +26,6 @@ public abstract class Item extends com.example.razbuc.GameEntity {
         this.itemType = itemType;
         this.setPosition(position);
         this.setType(ElementType.Item);
-        this.setPrice(value[0]);
     }
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
@@ -46,14 +44,6 @@ public abstract class Item extends com.example.razbuc.GameEntity {
 
     public void setDurability(int durability) {
         this.durability = durability;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     public ItemType getItemType() {
