@@ -31,15 +31,15 @@ public class NeutralChar extends NonFightingChar {
     }
 
 
-    private int state = 1;
+    private int _state = 1;
 
     private int state_1(String fling){
         switch (fling){
             case "Fling droit":
-                this.state = 2;
+                this._state = 2;
                 return R.string.mamie_2;
             case "Fling gauche":
-                this.state = 0;
+                this._state = 0;
                 return R.string.mamie_wrong_answer;
         }
         return R.string.mamie_wrong_answer;
@@ -47,19 +47,19 @@ public class NeutralChar extends NonFightingChar {
     private int state_2(String fling){
         switch (fling){
             case "Fling droit":
-                this.state = 0;
+                this._state = 0;
                 return R.string.mamie_wrong_answer;
             case "Fling gauche":
-                this.state = 3;
+                this._state = 3;
                 return R.string.mamie_3;
         }
         return R.string.mamie_wrong_answer;
     }
     public void resetDialog(){
-        this.state = 1;
+        this._state = 1;
     }
     public int repeat(){
-        switch (this.state){
+        switch (this._state){
             case 1:
                 return R.string.mamie_1;
             case 2:
@@ -68,7 +68,7 @@ public class NeutralChar extends NonFightingChar {
         return R.string.mamie_1;
     }
     public int answer(String fling){
-        switch(this.state){
+        switch(this._state){
             case 1:
                 return state_1(fling);
             case 2:
@@ -78,11 +78,11 @@ public class NeutralChar extends NonFightingChar {
     }
 
     public boolean isDialogEnded(){
-        return (this.state == 0 || this.state == 3);
+        return (this._state == 0 || this._state == 3);
     }
 
     public int endDialog(Hero hero){
-        if (this.state == 3) {
+        if (this._state == 3) {
             if (hero.hasToolbox()) {
                 this.setVisited(true);
                 hero.addAlly(this);
