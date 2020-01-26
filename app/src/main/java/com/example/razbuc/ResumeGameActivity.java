@@ -12,6 +12,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.razbuc.Enumerations.ConstructionType;
 import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.Enumerations.ItemType;
@@ -34,8 +40,16 @@ import com.example.razbuc.location.Construction;
 import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
 import com.example.razbuc.location.Vehicule;
+import com.example.razbuc.location.constructionType.Building;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -751,6 +765,58 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         speak(R.string.game_finished);
     }
 
+
+    protected void onPause() {
+        super.onPause();
+        RazbucLocalDb razbucLocalDb;
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url = getResources().getString(R.string.Firestore_save);
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                //params.put("id", razbucLocalDb.getUserId());
+                if (gameMap.getMapJson().size() == 0) {
+                    Log.i("COUCOU", "EMPTY");
+                } else {
+                    JSONObject map = new JSONObject();
+                    try {
+                    for (Object obj : gameMap.getMapJson()) {
+                        Gson gson = new Gson();
+                        String json = gson.toJson(obj);
+                        JSONObject jsonObj = new JSONObject(json);
+                        map.put("value", jsonObj.get("elements"));
+                        Log.i("COUCOU", map.toString());
+                        }
+                    } catch (final JSONException e) {}
+
+                Log.i("SALUT", map.toString());
+                    params.put("value", map.toString());
+
+                }
+                return params;
+            }
+        };
+        queue.add(postRequest);
+    }
 
     /******* GESTURE METHODS IMPLEMENTATION *******/
 

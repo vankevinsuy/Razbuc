@@ -3,11 +3,14 @@ package com.example.razbuc;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,7 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.razbuc.LocalDatabase.RazbucLocalDb;
+import com.example.razbuc.items.PaperMap;
+import com.example.razbuc.location.GameMap;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -110,4 +120,5 @@ public class SplashScreen extends AppCompatActivity {
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
+
 }

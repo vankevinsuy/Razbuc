@@ -2,6 +2,7 @@
     <string name="app_name">Razbuc</string>
 
     <string name="Firestore_add_new_user">https://us-central1-razbuc-6425f.cloudfunctions.net/start?id=</string>
+    <string name="Firestore_save">https://us-central1-razbuc-6425f.cloudfunctions.net/save</string>
     <string name="action_move">move</string>
     <string name="action_interact">interaction</string>
     <string name="action_combat">combat</string>
