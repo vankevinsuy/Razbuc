@@ -800,7 +800,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 JSONObject save = new JSONObject();
                 Map<String,String> params = new HashMap<String, String>();
                 if (gameMap.getMapJson().size() == 0) {
-                    Log.i("COUCOU", "EMPTY");
+                    Log.wtf("ERROR", " GAME MAP IS EMPTY");
                 } else {
                     JSONObject district = new JSONObject();
                     try {
@@ -817,16 +817,29 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     map.put("name", gameMap.getName());
                     map.put("type", gameMap.getType());
                     map.put("hp", hero.getHealth_points());
-                    map.put("position", hero.getPosition());
-                    map.put("inventory", hero.getInventory());
+                    map.put("position", Arrays.toString(hero.getPosition()));
+
+                    JSONObject items = new JSONObject();
+                    int index1 = 0;
+                    for (Object item : hero.getInventory()) {
+                        Gson gson = new Gson();
+                        String itemJson = gson.toJson(item);
+                        JSONObject jsonObj = new JSONObject(itemJson);
+                        items.put("" + index1, jsonObj);
+                        index1 += 1;
+                    }
+
+                    map.put("inventory", items);
                     map.put("district", district);
 
                     save.put("value", map);
-                    //save.put("id", RazbucLocalDb.getUserId());
+
+                    RazbucLocalDb razbucLocalDb = new RazbucLocalDb(getApplicationContext());
+                    save.put("id", razbucLocalDb.getUserId());
 
                     } catch (final JSONException e) {}
 
-
+                    Log.i("SALUT", save.toString());
                     params.put("value", save.toString());
 
                 }
