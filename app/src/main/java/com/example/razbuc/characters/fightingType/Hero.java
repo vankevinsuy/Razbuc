@@ -136,7 +136,10 @@ public class Hero extends FightingChar {
 
     public void useCareKit(){
         removeCareKit(1);
-        this.gainHealth_points(5);
+        if (this.getHealth_points() <= 15)
+            this.gainHealth_points(5);
+        else
+            this.setHealth_points(20);
     }
 
     public void removeCareKit(int number){

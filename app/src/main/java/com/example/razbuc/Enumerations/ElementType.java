@@ -2,7 +2,7 @@ package com.example.razbuc.Enumerations;
 
 public enum ElementType {  // Correspond aux types des elements dans la bdd
     Construction ("Construction"),
-    Ennemy ("Ennemy"),
+    ENEMY("Enemy"),
     PNJ ("PNJ"),
     Merchant ("Marchand"),
     Vehicule ("Vehicule"),

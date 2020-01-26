@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,10 +15,10 @@ import androidx.core.view.GestureDetectorCompat;
 import com.example.razbuc.Enumerations.ConstructionType;
 import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.Enumerations.ItemType;
+import com.example.razbuc.LocalDatabase.RazbucLocalDb;
 import com.example.razbuc.characters.FightingChar;
-import com.example.razbuc.characters.NonFightingChar;
-import com.example.razbuc.characters.fightingType.AgressiveGranny;
-import com.example.razbuc.characters.fightingType.Ennemy;
+import com.example.razbuc.characters.fightingType.AggressiveGranny;
+import com.example.razbuc.characters.fightingType.Enemy;
 import com.example.razbuc.characters.fightingType.Hero;
 import com.example.razbuc.characters.fightingType.heroType.Artificer;
 import com.example.razbuc.characters.fightingType.heroType.Explorer;
@@ -27,9 +26,7 @@ import com.example.razbuc.characters.fightingType.heroType.Medic;
 import com.example.razbuc.characters.fightingType.heroType.SergeantMajor;
 import com.example.razbuc.characters.nonFightingType.Merchant;
 import com.example.razbuc.characters.nonFightingType.NeutralChar;
-import com.example.razbuc.items.Consumable;
 import com.example.razbuc.items.Item;
-import com.example.razbuc.items.Misc;
 import com.example.razbuc.items.PaperMap;
 import com.example.razbuc.items.Toolbox;
 import com.example.razbuc.items.Weapon;
@@ -37,7 +34,6 @@ import com.example.razbuc.location.Construction;
 import com.example.razbuc.location.District;
 import com.example.razbuc.location.GameMap;
 import com.example.razbuc.location.Vehicule;
-import com.example.razbuc.location.constructionType.Building;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,7 +59,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
 
     Hero hero;
-    TextView textView, currentPosition, elements;
+    //TextView textView, currentPosition, elements;
     District district;
     GameMap gameMap;
 
@@ -73,9 +69,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         setContentView(R.layout.activity_resume_game);
         hideSystemUI();
 
-        textView = findViewById(R.id.directionPossible);
-        currentPosition  = findViewById(R.id.currentPosition);
-        elements = findViewById(R.id.elements);
+        //textView = findViewById(R.id.directionPossible);
+        //currentPosition  = findViewById(R.id.currentPosition);
+        //elements = findViewById(R.id.elements);
 
         gameMap = new GameMap();
         gameMap.buildUserSavedMap(getApplicationContext());
@@ -249,8 +245,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
         sayDirections.append(".");
         speak(sayDirections.toString());
-        textView.setText(directions.toString());
-        currentPosition.setText((hero.getPosition()[0] + "  " + hero.getPosition()[1]));
+        //if (this.hero.hasPaperMap()){ }
+        //textView.setText(directions.toString());
+        //currentPosition.setText((hero.getPosition()[0] + "  " + hero.getPosition()[1]));
     }
     private String adaptDirectionForSpeak(String direction){
         switch (direction){
@@ -264,6 +261,28 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         return "";
     }
 
+    /*private void useMap(District district){
+        for (String direction : district.getPossibleDirection()){
+            StringBuilder sb = new StringBuilder();
+            int[] pos = district.getPosition();
+            switch (direction){
+                case "est":
+                    pos[0]++;
+                    break;
+                case "nord":
+                    pos[1]--;
+                    break;
+                case "sud":
+                    pos[1]++;
+                    break;
+                case "ouest":
+                    pos[0]--;
+                    break;
+            }
+            District d = gameMap.getDistrictByPosition(pos);
+        }
+    }*/
+
 
     private void verifyElementAround(boolean talk, boolean modifyCURRENT_ACTION){
         // saying which element are around
@@ -272,7 +291,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         int indexGesture = 0;
         boolean firstElement = true;
         if (gameMap.getDistrictByPosition(hero.getPosition()).nothingToInteract()){
-            elements.setText("nothing around");
+            //elements.setText("nothing around");
             if (talk)
                 speak("Il n'y a rien autour de moi.");
         }
@@ -284,11 +303,11 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 indexGesture = indexGesture + 1;
 
                 element_names.append(element.getName()).append("    ");
-                if (element.getType() == ElementType.Ennemy && !element.isVisited()){
+                if (element.getType() == ElementType.ENEMY && !element.isVisited()){
                     if (!hero.hasVehicule()) {
-                        Ennemy ennemy = (Ennemy) element;
-                        combatMode(ennemy);
-                        ennemy.setVisited(true);
+                        Enemy enemy = (Enemy) element;
+                        combatMode(enemy);
+                        enemy.setVisited(true);
                     }
                     else{
                         speak(R.string.crush_ennemy);
@@ -308,7 +327,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     }
                 }
             }
-            elements.setText(element_names.toString());
+            //elements.setText(element_names.toString());
 
             if(modifyCURRENT_ACTION){
                 CURRENT_ACTION = getResources().getString(R.string.action_interact);
@@ -340,7 +359,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 }
                 break;
 
-            case Ennemy:
+            case ENEMY:
                 for(Map.Entry<GameEntity, String> entry : MapgestureByElement.entrySet()) {
                     if(element.equals(entry.getKey())){
                         speak("pour combattre, faite un " + entry.getValue());
@@ -387,21 +406,21 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                     switch (building.getConstructionType()) {
                         case Garage:
                             this.building_fight = building;
-                            combatMode(new Ennemy("Razbuc", hero.getPosition(), 15, 2, 10, null, false));
+                            combatMode(new Enemy("Razbuc", hero.getPosition(), 15, 2, 10, null, false));
                             break;
                         case Mur:
                             if (this.hero.hasVehicule()){
                                 speak("Vous parvenez à détruire le mur.");
                                 speak(R.string.mamie_mechante);
-                                Ennemy ennemy = new AgressiveGranny("Mamie", new int[]{}, 20, 4, 12, null, true);
-                                combatMode(ennemy);
+                                Enemy enemy = new AggressiveGranny("Mamie", new int[]{}, 20, 4, 12, null, true);
+                                combatMode(enemy);
                                 this.STORY_END = true;
                             }
                             else{
                                 speak(R.string.map9);
                             }
                             break;
-                        default:
+                        case Hopital:
                             int trousse_de_soins = 0;
                             boolean item_found = false;
                             for (Item item : building.getInventory()) {
@@ -409,16 +428,30 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                                     item_found = true;
                                     if (item.getItemType() == ItemType.Consumable)
                                         trousse_de_soins++;
-                                    else
-                                        speak("Vous avez trouvé " + item.getFullName() + ".");
+                                    hero.addToInventory(item);
+                                }
+                            }
+                            speak("Vous avez croisé des razbuc, et avez réussi à vous en sortir, mais non sans encombre.");
+                            if (trousse_de_soins > 0)
+                                speak("Vous avez trouvé " + ((trousse_de_soins == 1) ? "une" : trousse_de_soins) + " trousse de soins.");
+                            if (!item_found)
+                                speak("Vous n'avez rien trouvé dans ce bâtiment.");
+                            building.setVisited(true);
+                            this.hero.loseHealth_points(3);
+                            checkHeroHealth();
+                            break;
+                        default:
+                            item_found = false;
+                            for (Item item : building.getInventory()) {
+                                if (rollTheDice("perception", this.hero)) {
+                                    item_found = true;
+                                    speak("Vous avez trouvé " + item.getFullName() + ".");
                                     if (item.getItemType() == ItemType.Weapon)
                                         hero.setWeapon((Weapon)item);
                                     else
                                         hero.addToInventory(item);
                                 }
                             }
-                            if (trousse_de_soins > 0)
-                                speak("Vous avez trouvé " + ((trousse_de_soins == 1) ? "une" : trousse_de_soins) + " trousse de soins.");
                             if (!item_found)
                                 speak("Vous n'avez rien trouvé dans ce bâtiment.");
                             building.setVisited(true);
@@ -464,12 +497,12 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
 
     private Construction building_fight = null;
-    private Ennemy ennemy;
-    private void combatMode(Ennemy ennemy) {
+    private Enemy enemy;
+    private void combatMode(Enemy enemy) {
         CURRENT_ACTION = getResources().getString(R.string.action_combat);
-        this.ennemy = ennemy;
-        speak("Un combat est lancé contre " + this.ennemy.getNameWithPronoun());
-        if (ennemy.isInitiative()){
+        this.enemy = enemy;
+        speak("Un combat est lancé contre " + this.enemy.getNameWithPronoun());
+        if (enemy.isInitiative()){
             speak(R.string.initiative);
             ennemyAttack();
         }
@@ -477,7 +510,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     }
     Random r = new Random();
     private void ennemyAttack(){
-        if (this.ennemy.getName().equals("Mamie")){
+        if (this.enemy.getName().equals("Mamie")){
             String[] ennemyAttack = getResources().getStringArray(R.array.granny_attack);
             speak(ennemyAttack[r.nextInt(ennemyAttack.length)]);
         }
@@ -486,13 +519,14 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             speak(ennemyAttack[r.nextInt(ennemyAttack.length)]);
         }
 
-        boolean success = rollTheDice("force", this.ennemy);
+        boolean success = rollTheDice("force", this.enemy);
         if (success){
             //String[] attack_success = getResources().getStringArray(R.array.ennemy_attack_success);
             //speak(attack_success[r.nextInt(attack_success.length)]);
-            this.hero.loseHealth_points(this.ennemy.getReal_damages());
-            checkCombatStatus();
-            checkHeroHealth();
+            this.hero.loseHealth_points(this.enemy.getReal_damages());
+            boolean end = checkCombatStatus();
+            if (!end)
+                checkHeroHealth();
         }
         else{
             String[] attack_failure = getResources().getStringArray(R.array.ennemy_attack_failure);
@@ -512,7 +546,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         boolean success = rollTheDice("force", hero);
         boolean end = false;
         if (success){
-            this.ennemy.loseHealth_points(hero.getReal_damages());
+            this.enemy.loseHealth_points(hero.getReal_damages());
             end = checkCombatStatus();
             if (end)
                 return;
@@ -531,7 +565,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             game_ended();
             return true;
         }
-        else if (this.ennemy.getHealth_points() <= 0){
+        else if (this.enemy.getHealth_points() <= 0){
             if (this.building_fight != null){
                 building_fight.setVisited(true);
                 speak("Le razbuc s'écroule. Vous fouillez le garage et trouvez une boite à outils.");
@@ -539,10 +573,9 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                 this.building_fight = null;
             }
             else {
+                textByDistrict(gameMap.getDistrictByPosition(hero.getPosition()), true);
                 if (STORY_END)
                     speak(R.string.end);
-                else
-                    textByDistrict(gameMap.getDistrictByPosition(hero.getPosition()), true);
             }
             if (STORY_END)
                 game_ended();
@@ -771,6 +804,11 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
             case "commerce":
                 buy();
                 break;
+            case "end":
+                new RazbucLocalDb(getApplicationContext()).clearDatabase();
+                Intent SplashScreenActivity = new Intent(getApplicationContext(), SplashScreen.class);
+                startActivity(SplashScreenActivity);
+                finish();
         }
         return false;
     }
