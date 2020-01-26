@@ -777,6 +777,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
                 Log.i("SALUT", map.toString());
                     params.put("value", map.toString());
+
                 }
                 return params;
             }
