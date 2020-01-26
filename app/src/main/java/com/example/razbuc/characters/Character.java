@@ -13,6 +13,12 @@ public abstract class Character extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new character.
+     *
+     * @param name indicating the name of the character
+     * @param inventory indicating the list of items the character possesses
+     * @param position indicating the location on the map where the character can be met
+     */
     public Character(String name,
                      List<Item> inventory,
                      int[] position) {
@@ -22,17 +28,28 @@ public abstract class Character extends GameEntity {
         this.setPosition(position);
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Basic getters and setters
 
+    public List<Item> getInventory () {
+        return inventory;
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
+
+    /** Adds an item to the inventory of a character
+     *
+     * @param item indicating which item should be added to the inventory of the character
+     */
     public void addToInventory(Item item) {
         this.inventory.add(item);
     }
 
+    /** Removes an item from the inventory of a character
+     *
+     * @param item indicating which item should be removed from the inventory of the character
+     */
     public void removeFromInventory(Item item) {
         this.inventory.remove(item);
-    }
-
-    public List<Item> getInventory () {
-        return inventory;
     }
 
 }

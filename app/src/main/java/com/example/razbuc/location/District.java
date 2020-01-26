@@ -5,7 +5,9 @@ import com.example.razbuc.GameEntity;
 import java.util.ArrayList;
 
 public class District extends GameEntity {
+
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Attributes
+
     private ArrayList<String> possibleDirection;
     private ArrayList<GameEntity> elements;
     private int id;
@@ -13,6 +15,11 @@ public class District extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new district
+     *
+     * @param name indicating the name of the district
+     * @param position indicating the location on the map of the district
+     */
     public District(String name,
                     int[] position) {
         System.out.println("Constructing a district ...");

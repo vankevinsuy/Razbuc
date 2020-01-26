@@ -3,7 +3,6 @@ package com.example.razbuc.characters;
 import com.example.razbuc.items.Item;
 import com.example.razbuc.items.Weapon;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FightingChar extends Character {
@@ -21,6 +20,19 @@ public abstract class FightingChar extends Character {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new fighting character
+     *
+     * @param name indicating the name of the character
+     * @param inventory indicating the list of items the character possesses
+     * @param position indicating the location where the character can be met
+     * @param health_points indicating the number of hits the character can take before dying
+     * @param basic_damages indicating the number of basic hits per turn the character can deal to another character
+     * @param force indicating the ability score for the "force" trait of the character
+     * @param perception indicating the ability score for the "perception" trait of the character
+     * @param craft indicating the ability score for the "craft" trait of the character
+     * @param connaissance indicating the ability score for the "connaissance" trait of the character
+     * @param weapon indicating the "weapon" item that the character uses to fight with
+     */
     public FightingChar(String name,
                         List<Item> inventory,
                         int[] position,
@@ -102,10 +114,18 @@ public abstract class FightingChar extends Character {
     }
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
 
+    /** Adds health points to the character current health
+     *
+     * @param value indicating the amount of points for the character to be healed
+     */
     public void gainHealth_points(int value) {
         setHealth_points(this.getHealth_points() + value);
     }
 
+    /** Removes health points to the character current health
+     *
+     * @param value indicating the amount of points for the character to be hit
+     */
     public void loseHealth_points(int value) {
         int result = this.getHealth_points() - value;
         if (result < 0) {
@@ -115,7 +135,10 @@ public abstract class FightingChar extends Character {
         }
     }
 
-
+    /** Computes the real final hit points the character will deal per turn
+     *
+     * @return the sum of the character's basic damages and its weapon damages
+     */
     public int getReal_damages() {
         if (this.weapon == null) {
             return this.basic_damages;
@@ -124,6 +147,10 @@ public abstract class FightingChar extends Character {
         }
     }
 
+    /** Check if the fighting character possesses a weapon
+     *
+     * @return a boolean indicating if the fighting character has a weapon
+     */
     public boolean hasWeapon(){
         return this.weapon != null;
     }

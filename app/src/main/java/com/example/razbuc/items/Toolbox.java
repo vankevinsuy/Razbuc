@@ -11,6 +11,14 @@ public class Toolbox extends Item {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new toolbox
+     *
+     * @param name indicating the name of the toolbox
+     * @param value indicating the value of the toolbox
+     * @param durability indicating the durability of the toolbox
+     * @param position indicating the location on the map where the toolbox can be met
+     */
+
     // Consumable creation with custom durability
     public Toolbox(String name,
                    int[] value,
@@ -28,11 +36,21 @@ public class Toolbox extends Item {
         System.out.println("Constructing a toolbox ...");
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
+
+    /** Gives a name for a specific toolbox
+     *
+     * @return a string indicating a specific toolbox
+     */
     @Override
     public String getNameWithPronoun() {
         return "La boite à outil";
     }
 
+    /** Gives a name for a toolbox
+     *
+     * @return a string indicating a toolbox
+     */
     @Override
     public String getFullName() {
         return "Une boite à outil";

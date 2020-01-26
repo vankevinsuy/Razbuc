@@ -12,12 +12,17 @@ import java.util.HashMap;
 
 public class Merchant extends NonFightingChar {
 
-
     private int index;
     private HashMap<Item,Integer> shop;
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new merchant
+     *
+     * @param name indicating the name of the merchant
+     * @param inventory indicating the list of items the merchant can sell
+     * @param position indicating the location on the map where the merchant can be met
+     */
     public Merchant(String name,
                     ArrayList<Item> inventory,
                     int[] position) {
@@ -31,37 +36,69 @@ public class Merchant extends NonFightingChar {
         index = 0;
     }
 
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Gestures
+
+    /** Fling to the right to check the next selling item
+     *
+     * @return an output indicating the price of the item
+     */
     public String flingDroit(){
         this.index = (this.index + 1) % this.shop.size();
         return sayItemCost();
     }
 
+    /** Fling to the left to check the previous selling item
+     *
+     * @return an output indicating the price of the item
+     */
     public String flingGauche(){
         this.index = (this.index - 1 + this.shop.size()) % this.shop.size();
         return sayItemCost();
     }
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
+
+    /** Tells the cost of an item
+     *
+     * @return a string indicating the price of an item
+     */
     public String sayItemCost(){
         Item item = (Item)this.shop.keySet().toArray()[this.index];
         int cout = this.shop.get(item);
         return (item.getFullName() + " pour " + (cout == 1 ? "une" : cout) + " trousses de soins");
     }
 
+    /** (META) Gets the price of a selected item
+     *
+     * @return the price of an item
+     */
     public int getPrice(){
         Item item = (Item)this.shop.keySet().toArray()[this.index];
         return this.shop.get(item);
     }
 
+    /** (META) Gets a selected item
+     *
+     * @return an item
+     */
     public Item getItem(){
         return (Item) this.shop.keySet().toArray()[this.index];
     }
 
-
+    /** Gives a name for a specific merchant
+     *
+     * @return a string indicating a specific merchant
+     */
     @Override
     public String getNameWithPronoun() {
         return "Le marchand";
     }
 
+    /** Gives a name for a merchant
+     *
+     * @return a string indicating a merchant
+     */
     @Override
     public String getFullName() {
         return "Un marchand";

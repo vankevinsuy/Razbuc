@@ -12,7 +12,9 @@ public class Explorer extends Hero {
 
     final static String HERO_TYPE = "Explorer";
 
-
+    /** Creates a new explorer
+     *
+     */
     public Explorer() {
         super(HERO_TYPE, Arrays.asList(new Item[] { new PaperMap("Carte",new int[] {0},new int[] {-1,-1}) }), 16,12,12,12,null);
     }

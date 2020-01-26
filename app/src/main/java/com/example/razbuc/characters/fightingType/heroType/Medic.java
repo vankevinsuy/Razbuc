@@ -12,6 +12,9 @@ public class Medic extends Hero {
 
     final static String HERO_TYPE = "Medic";
 
+    /** Creates a new medic
+     *
+     */
     public Medic() {
         super(HERO_TYPE, new ArrayList<Item>(), 12,12,16,12,null);
         this.addToInventory(new Consumable("Trousse de soins",new int[] {0},new int[] {-1,-1}));

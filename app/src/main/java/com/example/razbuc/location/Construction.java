@@ -16,6 +16,14 @@ public class Construction extends GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new construction
+     *
+     * @param name indicating the name of the construction
+     * @param position indicating the location on the map where the construction can be visited
+     * @param type indicating the element
+     * @param constructionType indicating type of the construction
+     * @param inventory indicating the list of items that can be found in the construction
+     */
     public Construction(String name,
                         int[] position,
                         ElementType type,
@@ -36,21 +44,31 @@ public class Construction extends GameEntity {
         this.inventory = inventory;
     }
 
-    @Override
-    public String getFullName(){
-        return "";
-    }
-
-    @Override
-    public String getNameWithPronoun() {
-        return "";
-    }
-
     public ConstructionType getConstructionType() {
         return constructionType;
     }
 
     public void setConstructionType(ConstructionType constructionType) {
         this.constructionType = constructionType;
+    }
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
+
+    /** Gives a name for a specific construction
+     *
+     * @return a string indicating a specific construction
+     */
+    @Override
+    public String getFullName(){
+        return "";
+    }
+
+    /** Gives a name for a construction
+     *
+     * @return a string indicating a construction
+     */
+    @Override
+    public String getNameWithPronoun() {
+        return "";
     }
 }

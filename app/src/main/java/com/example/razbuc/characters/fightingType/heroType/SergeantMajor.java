@@ -11,6 +11,9 @@ public class SergeantMajor extends Hero {
 
     final static String HERO_TYPE = "SergentMajor";
 
+    /** Creates a new sergeant major
+     *
+     */
     public SergeantMajor() {
         super(HERO_TYPE, new ArrayList<Item>(), 12,12,12,16, new Weapon("Pistolet", 3,new int[] {-1,-1}));
     }

@@ -14,6 +14,14 @@ public abstract class Item extends com.example.razbuc.GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Constructor
 
+    /** Creates a new item
+     *
+     * @param name indicating a name for the item
+     * @param value indicating the value of the item
+     * @param itemType indicating the type of the item
+     * @param durability indicating the durability of the item
+     * @param position indicating the location on the map where the item can be found
+     */
     public Item(String name,
                 int[] value,
                 ItemType itemType,
@@ -56,10 +64,18 @@ public abstract class Item extends com.example.razbuc.GameEntity {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~ Custom methods
 
+    /** Reduces the durability of the item
+     *
+     * @param stacks indicating the number of uses that the item loses
+     */
     public void lowerDurability(int stacks) {
         setDurability(this.durability - stacks);
     }
 
+    /** Increases the durability of the item
+     *
+     * @param stacks indicating the number of uses that the item gains
+     */
     public void addDurability(int stacks) {
         setDurability(this.durability + stacks);
     }
