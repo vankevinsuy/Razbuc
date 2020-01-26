@@ -9,7 +9,7 @@ import com.example.razbuc.Enumerations.ConstructionType;
 import com.example.razbuc.Enumerations.ElementType;
 import com.example.razbuc.Enumerations.ItemType;
 import com.example.razbuc.LocalDatabase.RazbucLocalDb;
-import com.example.razbuc.characters.fightingType.Ennemy;
+import com.example.razbuc.characters.fightingType.Enemy;
 import com.example.razbuc.characters.nonFightingType.Merchant;
 import com.example.razbuc.characters.nonFightingType.NeutralChar;
 import com.example.razbuc.items.Consumable;
@@ -101,7 +101,7 @@ public class GameMap {
                                 d.addElements(new Vehicule(name, districtPosition));
                                 break;
 
-                            case "Ennemy":
+                            case "Enemy":
                                 Random rand = new Random();
                                 int hp = rand.nextInt(20);
                                 int damage = 0;
@@ -112,7 +112,7 @@ public class GameMap {
                                     damage = rand.nextInt(4);
                                 }
 
-                                d.addElements(new Ennemy(name, districtPosition, hp, damage, 12, null, false));
+                                d.addElements(new Enemy(name, districtPosition, hp, damage, 12, null, false));
                                 break;
 
                             case "PNJ":
@@ -263,7 +263,7 @@ public class GameMap {
                                     d.addElements(new Vehicule(elementName, districtPosition));
                                     break;
 
-                                case Ennemy:
+                                case ENEMY:
                                     int hp;
                                     int damage;
                                     int force;
@@ -279,7 +279,7 @@ public class GameMap {
                                         force = 10;
                                     }
 
-                                    d.addElements(new Ennemy(elementName, districtPosition, hp, damage, force, null, initiative));
+                                    d.addElements(new Enemy(elementName, districtPosition, hp, damage, force, null, initiative));
                                     break;
 
                                 case PNJ:
