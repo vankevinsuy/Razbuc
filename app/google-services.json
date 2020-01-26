@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "593145063342",
+    "firebase_url": "https://razbuc-6425f.firebaseio.com",
+    "project_id": "razbuc-6425f",
+    "storage_bucket": "razbuc-6425f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593145063342:android:94c315293dbfff4839ca3f",
+        "android_client_info": {
+          "package_name": "com.example.razbuc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593145063342-n1v5a9rgjduaum98k16aj9t799or3pin.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.razbuc",
+            "certificate_hash": "3f024191e57942ff3233bf0cbdbb76a66a703936"
+          }
+        },
+        {
+          "client_id": "593145063342-iod0ill9dh3rgg8nvl34k09oipali9je.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJl-scHLH-H0cQ4Z17APNGpYpHY0wYdU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593145063342-iod0ill9dh3rgg8nvl34k09oipali9je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

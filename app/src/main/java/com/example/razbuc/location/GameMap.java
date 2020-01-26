@@ -33,6 +33,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +57,7 @@ public class GameMap {
         this.listDistrict = new ArrayList<>();
     }
 
-    public void builBasicdMap(){
+    public void builBasicdMap() {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
@@ -64,7 +68,7 @@ public class GameMap {
 
 
                 chapter = (String) dataSnapshot.child("chapter").getValue();
-                finished = (boolean)dataSnapshot.child("finished").getValue();
+                finished = (boolean) dataSnapshot.child("finished").getValue();
                 name = (String) dataSnapshot.child("name").getValue();
                 type = (String) dataSnapshot.child("type").getValue();
 
@@ -76,18 +80,18 @@ public class GameMap {
                     districtPosition[0] = Integer.parseInt(FirebaseDistrict.child("posx").getValue().toString());
                     districtPosition[1] = Integer.parseInt(FirebaseDistrict.child("posy").getValue().toString());
 
-                    District d = new District((String)FirebaseDistrict.child("name").getValue(), districtPosition);
-                    d.setDescription((String)FirebaseDistrict.child("description").getValue());
+                    District d = new District((String) FirebaseDistrict.child("name").getValue(), districtPosition);
+                    d.setDescription((String) FirebaseDistrict.child("description").getValue());
                     d.setId(Integer.parseInt(FirebaseDistrict.child("id").getValue().toString()));
-                    d.setVisited((boolean)FirebaseDistrict.child("visited").getValue());
+                    d.setVisited((boolean) FirebaseDistrict.child("visited").getValue());
 
-                    for (DataSnapshot element : FirebaseDistrict.child("elements").getChildren()){
+                    for (DataSnapshot element : FirebaseDistrict.child("elements").getChildren()) {
                         String type = element.child("type").getValue().toString();
                         String name = element.child("nom").getValue().toString();
                         String state = element.child("state").getValue().toString();
 
 
-                        switch (type){
+                        switch (type) {
 
                             case "building":
                                 d.addElements(new Building(districtPosition, ElementType.Construction, null));
@@ -102,10 +106,9 @@ public class GameMap {
                                 int hp = rand.nextInt(20);
                                 int damage = 0;
 
-                                if(name.equals("Mamie")){
+                                if (name.equals("Mamie")) {
                                     damage = rand.nextInt(6);
-                                }
-                                else {
+                                } else {
                                     damage = rand.nextInt(4);
                                 }
 
@@ -113,7 +116,7 @@ public class GameMap {
                                 break;
 
                             case "PNJ":
-                                switch (name){
+                                switch (name) {
                                     case "Marchands":
                                         d.addElements(new Merchant(name, new ArrayList<Item>(), districtPosition));
                                         break;
@@ -129,7 +132,7 @@ public class GameMap {
 
 
                     // get the possible direction where we can move
-                    for (DataSnapshot direction : FirebaseDistrict.child("directionPossible").getChildren()){
+                    for (DataSnapshot direction : FirebaseDistrict.child("directionPossible").getChildren()) {
                         d.addPossibleDirection(direction.getValue().toString());
                     }
 
@@ -149,10 +152,9 @@ public class GameMap {
         });
     }
 
-
     private boolean ready = false;
 
-    public void buildUserSavedMap(Context context){
+    public void buildUserSavedMap(Context context) {
         razbucLocalDb = new RazbucLocalDb(context);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -164,41 +166,42 @@ public class GameMap {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     // Document found in the offline cache
+
                     DocumentSnapshot document = task.getResult();
 
                     Map<String, Object> data = document.getData();
                     Map<String, Object> values = (HashMap<String, Object>) data.get("value");
 
-                    chapter =   (String)    values.get("chapter");
-                    finished =  (boolean)   values.get("finished");
-                    name =      (String)    values.get("name");
-                    type =      (String)    values.get("type");
+                    chapter = (String) values.get("chapter");
+                    finished = (boolean) values.get("finished");
+                    name = (String) values.get("name");
+                    type = (String) values.get("type");
 
                     // treatment for each district
                     ArrayList<Map<String, Object>> ListOfdistrict = (ArrayList<Map<String, Object>>) values.get("district");
 
-                    for(Map<String, Object> district : ListOfdistrict){
+                    for (Map<String, Object> district : ListOfdistrict) {
 
                         int[] districtPosition = new int[2];
 
                         districtPosition[0] = Integer.parseInt(district.get("posx").toString());
                         districtPosition[1] = Integer.parseInt(district.get("posy").toString());
 
-                        District d = new District(district.get("name").toString() , districtPosition);
+                        District d = new District(district.get("name").toString(), districtPosition);
                         d.setDescription((String) district.get("description").toString());
                         d.setId(Integer.parseInt(district.get("id").toString()));
                         d.setVisited((boolean) district.get("visited"));
 
                         ArrayList<String> directionPossible = (ArrayList<String>) district.get("directionPossible");
 
-                        for(String direction : directionPossible){
+                        for (String direction : directionPossible) {
                             d.addPossibleDirection(direction);
                         }
 
                         // treatment for each element
                         ArrayList<Map<String, Object>> listOfElements = (ArrayList<Map<String, Object>>) district.get("elements");
 
-                        for(Map<String, Object> element : listOfElements){
+                        for (Map<String, Object> element : listOfElements) {
 
                             String elementType = element.get("type").toString();
                             String elementName = element.get("nom").toString();
@@ -212,10 +215,9 @@ public class GameMap {
 
                             ArrayList<Item> inventory = new ArrayList<>();
 
-                            if (items != null)
-                            {
-                                for (String s : items){
-                                    switch (ItemType.fromString(s)){
+                            if (items != null) {
+                                for (String s : items) {
+                                    switch (ItemType.fromString(s)) {
                                         case Consumable:
                                             inventory.add(new Consumable(s, value, 1, districtPosition));
                                             break;
@@ -233,9 +235,9 @@ public class GameMap {
                             }
 
 
-                            switch (ElementType.fromString(elementType)){
+                            switch (ElementType.fromString(elementType)) {
                                 case Construction:
-                                    switch (ConstructionType.fromString(elementName)){
+                                    switch (ConstructionType.fromString(elementName)) {
                                         case Hopital:
                                             d.addElements(new Hospital(districtPosition, ElementType.Construction, inventory));
                                             break;
@@ -267,12 +269,11 @@ public class GameMap {
                                     int force;
                                     boolean initiative = (element.get("initiative") != null) && (boolean) element.get("initiative");
 
-                                    if(elementName.equals("Mamie")){
+                                    if (elementName.equals("Mamie")) {
                                         damage = 4;
                                         hp = 20;
                                         force = 12;
-                                    }
-                                    else {
+                                    } else {
                                         damage = 2;
                                         hp = 15;
                                         force = 10;
@@ -282,7 +283,7 @@ public class GameMap {
                                     break;
 
                                 case PNJ:
-                                    switch (elementName){
+                                    switch (elementName) {
                                         case "Marchands":
                                             d.addElements(new Merchant(elementName, new ArrayList<Item>(), districtPosition));
                                             break;
@@ -307,16 +308,15 @@ public class GameMap {
         });
     }
 
-
     public ArrayList<District> getListDistrict() {
         return this.listDistrict;
     }
 
-    public District getDistrictByPosition(int x, int y){
+    public District getDistrictByPosition(int x, int y) {
         District res = null;
 
-        for(District district : this.listDistrict){
-            if(district.getPosition()[0] == x && district.getPosition()[1] == y){
+        for (District district : this.listDistrict) {
+            if (district.getPosition()[0] == x && district.getPosition()[1] == y) {
                 res = district;
             }
         }
@@ -324,20 +324,28 @@ public class GameMap {
         return res;
     }
 
-    public District getDistrictByPosition(int[] position){
+    public District getDistrictByPosition(int[] position) {
         District res = null;
 
-        for(District district : this.listDistrict){
-            if(district.getPosition()[0] == position[0] && district.getPosition()[1] == position[1]){
+        for (District district : this.listDistrict) {
+            if (district.getPosition()[0] == position[0] && district.getPosition()[1] == position[1]) {
                 res = district;
             }
         }
 
         return res;
     }
-
 
     public boolean isReady() {
         return ready;
+    }
+
+    public ArrayList getMapJson() {
+        if(ready) {
+            return listDistrict;
+        } else {
+            return new ArrayList();
+        }
+
     }
 }
