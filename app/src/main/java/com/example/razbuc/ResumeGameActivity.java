@@ -259,7 +259,8 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         }
         sayDirections.append(".");
         speak(sayDirections.toString());
-        //if (this.hero.hasPaperMap()){ }
+        if (this.hero.hasPaperMap())
+            useMap(district);
         //textView.setText(directions.toString());
         //currentPosition.setText((hero.getPosition()[0] + "  " + hero.getPosition()[1]));
     }
@@ -275,27 +276,29 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         return "";
     }
 
-    /*private void useMap(District district){
+    private void useMap(District district){
+        StringBuilder sb = new StringBuilder("Vous voyez sur votre carte ");
         for (String direction : district.getPossibleDirection()){
-            StringBuilder sb = new StringBuilder();
-            int[] pos = district.getPosition();
+            int[] pos = district.getPosition().clone();
             switch (direction){
-                case "est":
-                    pos[0]++;
-                    break;
-                case "nord":
-                    pos[1]--;
-                    break;
-                case "sud":
-                    pos[1]++;
-                    break;
-                case "ouest":
-                    pos[0]--;
-                    break;
+                case "est": pos[0]++; break;
+                case "nord": pos[1]--; break;
+                case "sud": pos[1]++; break;
+                case "ouest": pos[0]--; break;
             }
             District d = gameMap.getDistrictByPosition(pos);
+            GameEntity entity = d.getElements().get(0);
+            if (entity.getType() == ElementType.Construction){
+                sb.append(entity.getFullName());
+            }
+            else{
+                sb.append("rien");
+            }
+            sb.append((direction.equals("nord") || direction.equals("sud")) ? " au " : " à l'");
+            sb.append(adaptDirectionForSpeak(direction)).append(", ");
         }
-    }*/
+        speak(sb.toString());
+    }
 
 
     private void verifyElementAround(boolean talk, boolean modifyCURRENT_ACTION){
@@ -833,8 +836,8 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
     @Override
     public boolean onSingleTapConfirmed(MotionEvent e) {
         if (!this.canDetectEvent) {
-            mTTS.stop();               /// Pour couper le dialogue avec un clic lors des tests
-            this.canDetectEvent = true;     /// idem
+            //mTTS.stop();               /// Pour couper le dialogue avec un clic lors des tests
+            //this.canDetectEvent = true;     /// idem
             return false;
         }
         switch (CURRENT_ACTION){
