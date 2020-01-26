@@ -775,8 +775,8 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         }
                     } catch (final JSONException e) {}
 
-                    Log.i("COUCOU", map.toString());
-                    params.put("value", "test");
+                Log.i("SALUT", map.toString());
+                    params.put("value", map.toString());
                 }
                 return params;
             }
