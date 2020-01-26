@@ -348,4 +348,20 @@ public class GameMap {
         }
 
     }
+
+    public String getChapter() {
+        return this.chapter;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getType() {
+        return this.type;
+    }
+
+    public Boolean getfinished() {
+        return this.finished;
+    }
 }

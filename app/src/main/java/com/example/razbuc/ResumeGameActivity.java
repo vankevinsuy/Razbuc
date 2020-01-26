@@ -47,10 +47,12 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
@@ -768,7 +770,6 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
 
     protected void onPause() {
         super.onPause();
-        RazbucLocalDb razbucLocalDb;
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         String url = getResources().getString(R.string.Firestore_save);
 
@@ -792,24 +793,38 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         ) {
             @Override
             protected Map<String,String> getParams(){
+                JSONObject map = new JSONObject();
+                JSONObject save = new JSONObject();
                 Map<String,String> params = new HashMap<String, String>();
-                //params.put("id", razbucLocalDb.getUserId());
                 if (gameMap.getMapJson().size() == 0) {
                     Log.i("COUCOU", "EMPTY");
                 } else {
-                    JSONObject map = new JSONObject();
+                    JSONObject district = new JSONObject();
                     try {
+                        int index = 0;
                     for (Object obj : gameMap.getMapJson()) {
                         Gson gson = new Gson();
                         String json = gson.toJson(obj);
                         JSONObject jsonObj = new JSONObject(json);
-                        map.put("value", jsonObj.get("elements"));
-                        Log.i("COUCOU", map.toString());
+                        district.put("" + index, jsonObj.get("elements"));
+                        index += 1;
                         }
+                    map.put("chapter", gameMap.getChapter());
+                    map.put("finished", gameMap.getfinished());
+                    map.put("name", gameMap.getName());
+                    map.put("type", gameMap.getType());
+                    map.put("hp", hero.getHealth_points());
+                    map.put("position", hero.getPosition());
+                    map.put("inventory", hero.getInventory());
+                    map.put("district", district);
+
+                    save.put("value", map);
+                    //save.put("id", RazbucLocalDb.getUserId());
+
                     } catch (final JSONException e) {}
 
-                Log.i("SALUT", map.toString());
-                    params.put("value", map.toString());
+
+                    params.put("value", save.toString());
 
                 }
                 return params;
@@ -817,6 +832,7 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
         };
         queue.add(postRequest);
     }
+
 
     /******* GESTURE METHODS IMPLEMENTATION *******/
 
