@@ -22,6 +22,7 @@ public abstract class Item extends com.example.razbuc.GameEntity {
      * @param durability indicating the durability of the item
      * @param position indicating the location on the map where the item can be found
      */
+
     public Item(String name,
                 int[] value,
                 ItemType itemType,

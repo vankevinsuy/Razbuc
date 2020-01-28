@@ -814,7 +814,21 @@ public class ResumeGameActivity extends AppCompatActivity implements GestureDete
                         Gson gson = new Gson();
                         String json = gson.toJson(obj);
                         JSONObject jsonObj = new JSONObject(json);
-                        districtDiscret.put("elements", jsonObj.get("elements"));
+                        JSONObject items[] = new JSONObject[((Item[])jsonObj.get("elements")).length];
+                        int indexItem = 0;
+                        for(Item item : (Item[]) jsonObj.get("elements")) {
+                            JSONObject itemDiscret = new JSONObject();
+                            String name = item.getName();
+                            itemDiscret.put("nom", name);
+                            String type = item.getType().toString();
+                            itemDiscret.put("type", type);
+                            Boolean state = item.isVisited();
+                            itemDiscret.put("state", state);
+                            items[indexItem] = itemDiscret;
+                            indexItem += 1;
+                        }
+
+                        districtDiscret.put("elements", items);
 
                         int id = obj.getId();
                         districtDiscret.put("id", id);
