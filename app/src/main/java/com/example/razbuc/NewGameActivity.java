@@ -7,9 +7,12 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GestureDetectorCompat;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -23,6 +26,8 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
     private int selectedHero;
     private boolean canDetectEvent = true;
 
+    private ImageView characterSelection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +38,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
         mDetector = new GestureDetectorCompat(this,this);
         mDetector.setOnDoubleTapListener(this);
 
+        this.characterSelection = findViewById(R.id.characterSelection);
 
 //        GameMap gameMap = new GameMap();
 //        gameMap.builBasicdMap();
@@ -172,6 +178,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
                 speak(R.string.describe_characters);
                 currentStep = "select_hero";
                 selectedHero=0;
+                loadCharacterPicture(selectedHero);
                 speak(heroList[selectedHero]);
                 break;
             case "select_hero":
@@ -248,6 +255,7 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
         switch (currentStep) {
             case "select_hero":
                 selectedHero=(selectedHero+1) % heroList.length;
+                loadCharacterPicture(selectedHero);
                 speak(heroList[selectedHero]);
         }
         return true;
@@ -256,11 +264,34 @@ public class NewGameActivity extends AppCompatActivity implements GestureDetecto
         switch (currentStep) {
             case "select_hero":
                 selectedHero=(selectedHero-1+heroList.length)% heroList.length;
+                loadCharacterPicture(selectedHero);
                 speak(heroList[selectedHero]);
 
         }
         return true;
     }
 
+
+    private void loadCharacterPicture(int index){
+        switch (index){
+            case 0 :
+                Picasso.get().load(R.drawable.explorateur).into(this.characterSelection);
+                break;
+
+            case 1 :
+                Picasso.get().load(R.drawable.militaire).into(this.characterSelection);
+                break;
+
+
+            case 2 :
+                Picasso.get().load(R.drawable.artificier).into(this.characterSelection);
+                break;
+
+            case 3 :
+                Picasso.get().load(R.drawable.medecin).into(this.characterSelection);
+                break;
+
+        }
+    }
 
 }

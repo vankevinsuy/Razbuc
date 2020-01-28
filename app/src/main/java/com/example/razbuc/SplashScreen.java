@@ -29,7 +29,6 @@ import java.util.Map;
 
 public class SplashScreen extends AppCompatActivity {
 
-    private ImageView splashScreenImgView;
     private RazbucLocalDb razbucLocalDb;
 
 
@@ -39,13 +38,10 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         razbucLocalDb = new RazbucLocalDb(getApplicationContext());
-        this.splashScreenImgView = findViewById(R.id.splashScreenImageView);
 
         hideSystemUI();
 
-        Picasso.get().load(R.drawable.splash).fit().into(this.splashScreenImgView);
-
-        razbucLocalDb.clearDatabase(); // Sert lorsque la db n'est pas supprimé à la désinstallation de l'appli (bug ?)
+        //razbucLocalDb.clearDatabase(); // Sert lorsque la db n'est pas supprimé à la désinstallation de l'appli (bug ?)
 
         // after 2 seconds, destroy SplashScreen Activity and launch MainActivity
         Handler handler = new Handler();
@@ -65,9 +61,6 @@ public class SplashScreen extends AppCompatActivity {
                     ResumeGameActivity.putExtra("new", false);
                     startActivity(ResumeGameActivity);
                     finish();
-//                    Intent NewGameActivity = new Intent(getApplicationContext(), NewGameActivity.class);
-//                    startActivity(NewGameActivity);
-//                    finish();
                 }
             }
         }, 2000);
@@ -112,7 +105,7 @@ public class SplashScreen extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //System.out.println(error);
+                System.out.println(error);
                 //razbucLocalDb.saveUserId("E6hWSIVl0kjcgSiXaRKD");
             }
         });
