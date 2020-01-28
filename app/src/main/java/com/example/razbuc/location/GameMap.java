@@ -340,13 +340,8 @@ public class GameMap {
         return ready;
     }
 
-    public ArrayList getMapJson() {
-        if(ready) {
+    public ArrayList<District> getMapJson() {
             return listDistrict;
-        } else {
-            return new ArrayList();
-        }
-
     }
 
     public String getChapter() {

@@ -20,6 +20,7 @@ public class District extends GameEntity {
      * @param name indicating the name of the district
      * @param position indicating the location on the map of the district
      */
+
     public District(String name,
                     int[] position) {
         System.out.println("Constructing a district ...");
